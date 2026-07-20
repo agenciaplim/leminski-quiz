@@ -1,65 +1,54 @@
-import Image from "next/image";
+"use client";
+
+import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div className="flex flex-col items-center justify-between w-full min-h-full p-4 md:p-10 text-center overflow-y-auto">
+      
+      {/* Logos Area (Top) */}
+      <div className="w-full flex justify-between items-start px-2 md:px-10 pt-4 md:pt-8 opacity-90">
+        <div className="text-left flex flex-col items-start">
+          <p className="text-xs md:text-sm tracking-widest text-leminski-peach uppercase mb-2 md:mb-3 font-semibold">Realização</p>
+          {/* A imagem deve ser salva como logo-realizacao.png na pasta public */}
+          <img src="/logo-realizacao.png" alt="Realização - Festival Paulo Leminski" className="h-12 md:h-16 lg:h-20 object-contain" />
+        </div>
+        <div className="text-right flex flex-col items-end">
+          <p className="text-xs md:text-sm tracking-widest text-leminski-peach uppercase mb-2 md:mb-3 font-semibold">Patrocínio</p>
+          <div className="h-12 md:h-16 lg:h-20 w-24 md:w-48 bg-white/10 rounded animate-pulse"></div>
+        </div>
+      </div>
+
+      {/* Main Content (Center) */}
+      <div className="flex-1 flex flex-col items-center justify-center space-y-6 md:space-y-12 w-full my-8">
+        <div className="space-y-2 md:space-y-4">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-widest text-leminski-peach uppercase">
+            Festival
+          </h2>
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-leminski-pink leading-tight drop-shadow-[0_0_15px_rgba(240,142,165,0.5)]">
+            PAULO <br /> LEMINSKI
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+        </div>
+
+        <div className="glass-panel p-6 md:p-8 rounded-2xl md:rounded-3xl w-full max-w-sm md:max-w-lg mt-6 md:mt-10 border-leminski-pink/50">
+          <h3 className="text-xl md:text-2xl lg:text-3xl font-bold mb-2 md:mb-4 text-white uppercase tracking-wider">Quiz Interativo</h3>
+          <p className="text-base md:text-lg lg:text-xl text-leminski-peach leading-relaxed">
+            Teste seus conhecimentos sobre o poeta e o festival e concorra a prêmios exclusivos!
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+      </div>
+
+      {/* Action Button (Bottom) */}
+      <div className="w-full pb-8 md:pb-20 shrink-0">
+        <Link
+          href="/cadastro"
+          className="inline-flex items-center justify-center w-fit mx-auto py-4 px-8 md:py-6 md:px-12 rounded-full glass-button text-xl md:text-2xl lg:text-3xl font-bold uppercase tracking-wider animate-bounce whitespace-nowrap"
+        >
+          Tocar para Iniciar
+          <ChevronRight className="ml-2 md:ml-4 w-6 h-6 md:w-10 md:h-10 text-white" />
+        </Link>
+      </div>
     </div>
   );
 }
