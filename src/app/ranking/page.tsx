@@ -32,8 +32,8 @@ export default function Ranking() {
   };
 
   return (
-    <div className="flex flex-col w-full h-full p-10 bg-leminski-peach">
-      <header className="flex items-center justify-between mb-10">
+    <div className="flex flex-col w-full min-h-full p-4 md:p-10 bg-leminski-peach">
+      <header className="flex items-center justify-between mb-10 shrink-0">
         <Link href="/" className="p-4 rounded-full glass-panel active:translate-y-1 transition-transform flex justify-center items-center">
           <ArrowLeft className="w-8 h-8 text-leminski-blue" />
         </Link>
@@ -43,10 +43,10 @@ export default function Ranking() {
             Ranking Oficial
           </h1>
         </div>
-        <div className="w-16"></div> {/* Spacer for center alignment */}
+        <div className="w-16 shrink-0"></div> {/* Spacer for center alignment */}
       </header>
 
-      <div className="flex-1 flex flex-col space-y-4 overflow-y-auto no-scrollbar pb-10 max-w-4xl mx-auto w-full">
+      <div className="flex-1 flex flex-col space-y-4 pb-10 max-w-4xl mx-auto w-full">
         {topPlayers.length === 0 ? (
           <div className="flex-1 flex items-center justify-center text-3xl text-leminski-light font-bold">
             Ainda não há jogadores registrados.

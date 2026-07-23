@@ -16,16 +16,9 @@
     overscroll-behavior-y: none;
     user-select: none;
   }
+}
 
-  /* Esconder barras de rolagem globalmente */
-  ::-webkit-scrollbar {
-    display: none;
-  }
-  * {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-
+@layer utilities {
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
@@ -33,9 +26,7 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-}
 
-@layer utilities {
   .glass-panel {
     background: #FDFBF7;
     border: 3px solid #192B4D;
