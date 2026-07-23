@@ -37,6 +37,11 @@ export default function Cadastro() {
       //   return;
       // }
 
+      let finalCpf = formData.cpf.trim();
+      if (!finalCpf) {
+        finalCpf = "TESTE-" + Math.floor(Math.random() * 10000000);
+      }
+
       let displayName = formData.displayName.trim();
       if (!displayName) {
         const names = formData.fullName.trim().split(" ");
@@ -47,6 +52,7 @@ export default function Cadastro() {
 
       await db.participants.add({
         ...formData,
+        cpf: finalCpf,
         displayName,
         score: 0,
         timeMs: 0,
@@ -54,7 +60,7 @@ export default function Cadastro() {
         synced: false,
       });
 
-      sessionStorage.setItem("quiz_cpf", formData.cpf);
+      sessionStorage.setItem("quiz_cpf", finalCpf);
 
       router.push("/instrucoes");
     } catch (err) {
