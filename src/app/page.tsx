@@ -10,30 +10,29 @@ export default function Home() {
       {/* Logos Area (Top) */}
       <div className="w-full flex justify-between items-start px-2 md:px-10 pt-4 md:pt-8 opacity-90">
         <div className="text-left flex flex-col items-start">
-          <p className="text-xs md:text-sm tracking-widest text-leminski-peach uppercase mb-2 md:mb-3 font-semibold">Realização</p>
-          {/* A imagem deve ser salva como logo-realizacao.png na pasta public */}
+          <p className="text-xs md:text-sm tracking-widest text-leminski-blue uppercase mb-2 md:mb-3 font-bold">Realização</p>
           <img src="/logo-realizacao.png" alt="Realização - Festival Paulo Leminski" className="h-12 md:h-16 lg:h-20 object-contain" />
         </div>
         <div className="text-right flex flex-col items-end">
-          <p className="text-xs md:text-sm tracking-widest text-leminski-peach uppercase mb-2 md:mb-3 font-semibold">Patrocínio</p>
-          <div className="h-12 md:h-16 lg:h-20 w-24 md:w-48 bg-white/10 rounded animate-pulse"></div>
+          <p className="text-xs md:text-sm tracking-widest text-leminski-blue uppercase mb-2 md:mb-3 font-bold">Patrocínio</p>
+          <div className="h-12 md:h-16 lg:h-20 w-24 md:w-48 bg-white/20 rounded"></div>
         </div>
       </div>
 
       {/* Main Content (Center) */}
       <div className="flex-1 flex flex-col items-center justify-center space-y-6 md:space-y-12 w-full my-8">
         <div className="space-y-2 md:space-y-4">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-widest text-leminski-peach uppercase">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-widest text-leminski-blue uppercase drop-shadow-[2px_2px_0px_rgba(25,43,77,0.3)]">
             Festival
           </h2>
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-leminski-pink leading-tight drop-shadow-[0_0_15px_rgba(240,142,165,0.5)]">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-leminski-light leading-tight drop-shadow-[4px_4px_0px_#192B4D]">
             PAULO <br /> LEMINSKI
           </h1>
         </div>
 
-        <div className="glass-panel p-6 md:p-8 rounded-2xl md:rounded-3xl w-full max-w-sm md:max-w-lg mt-6 md:mt-10 border-leminski-pink/50">
-          <h3 className="text-xl md:text-2xl lg:text-3xl font-bold mb-2 md:mb-4 text-white uppercase tracking-wider">Quiz Interativo</h3>
-          <p className="text-base md:text-lg lg:text-xl text-leminski-peach leading-relaxed">
+        <div className="glass-panel p-6 md:p-8 rounded-2xl md:rounded-3xl w-full max-w-sm md:max-w-lg mt-6 md:mt-10">
+          <h3 className="text-xl md:text-2xl lg:text-3xl font-black mb-2 md:mb-4 uppercase tracking-wider">Quiz Interativo</h3>
+          <p className="text-base md:text-lg lg:text-xl font-medium leading-relaxed opacity-90">
             Teste seus conhecimentos sobre o poeta e o festival e concorra a prêmios exclusivos!
           </p>
         </div>
@@ -43,10 +42,10 @@ export default function Home() {
       <div className="w-full pb-8 md:pb-20 shrink-0">
         <Link
           href="/cadastro"
-          className="inline-flex items-center justify-center w-fit mx-auto py-4 px-8 md:py-6 md:px-12 rounded-full glass-button text-xl md:text-2xl lg:text-3xl font-bold uppercase tracking-wider animate-bounce whitespace-nowrap"
+          className="inline-flex items-center justify-center w-fit mx-auto py-4 px-8 md:py-6 md:px-12 rounded-full glass-button text-xl md:text-2xl lg:text-3xl font-black uppercase tracking-wider animate-bounce whitespace-nowrap"
         >
           Tocar para Iniciar
-          <ChevronRight className="ml-2 md:ml-4 w-6 h-6 md:w-10 md:h-10 text-white" />
+          <ChevronRight className="ml-2 md:ml-4 w-6 h-6 md:w-10 md:h-10" />
         </Link>
       </div>
     </div>

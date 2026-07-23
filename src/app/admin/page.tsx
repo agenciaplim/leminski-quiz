@@ -44,14 +44,14 @@ export default function AdminPanel() {
   );
 
   return (
-    <div className="flex flex-col w-full min-h-full p-4 md:p-10 bg-gray-950 overflow-y-auto">
+    <div className="flex flex-col w-full min-h-full p-4 md:p-10 bg-leminski-peach overflow-y-auto">
       <header className="flex flex-col md:flex-row items-center justify-between mb-8 glass-panel p-4 md:p-6 rounded-2xl space-y-4 md:space-y-0">
         <div className="flex items-center space-x-4">
-          <Settings className="w-8 h-8 md:w-10 md:h-10 text-pink-500 shrink-0" />
-          <h1 className="text-xl md:text-3xl font-bold">Painel Administrativo Plim</h1>
+          <Settings className="w-8 h-8 md:w-10 md:h-10 text-leminski-blue shrink-0" />
+          <h1 className="text-xl md:text-3xl font-black text-leminski-blue uppercase">Painel Administrativo</h1>
         </div>
         <div className="flex space-x-4">
-          <Link href="/" className="px-4 py-2 md:px-6 md:py-3 bg-gray-800 rounded-full text-sm md:text-base font-medium hover:bg-gray-700 transition">
+          <Link href="/" className="px-4 py-2 md:px-6 md:py-3 bg-leminski-blue text-white rounded-full text-sm md:text-base font-bold hover:bg-leminski-blue/90 transition shadow-[2px_2px_0px_#192B4D] active:translate-y-1 active:shadow-none">
             Voltar ao Totem
           </Link>
         </div>
@@ -61,37 +61,37 @@ export default function AdminPanel() {
         {/* Sidebar Controls */}
         <div className="glass-panel p-4 md:p-6 rounded-2xl flex flex-col space-y-6">
           <div className="space-y-4">
-            <h3 className="text-lg md:text-xl font-semibold text-gray-300">Status Operacional</h3>
+            <h3 className="text-lg md:text-xl font-bold text-leminski-blue uppercase">Status Operacional</h3>
             
-            <div className="flex flex-col bg-black/30 p-3 md:p-4 rounded-xl">
-              <span className="text-sm text-gray-400 mb-1">Totem Local</span>
-              <span className="text-green-400 font-bold text-lg">ONLINE</span>
+            <div className="flex flex-col bg-white border-2 border-leminski-blue p-3 md:p-4 rounded-xl shadow-[2px_2px_0px_#192B4D]">
+              <span className="text-sm font-bold text-leminski-blue/70 mb-1 uppercase">Totem Local</span>
+              <span className="text-green-600 font-black text-lg">ONLINE</span>
             </div>
             
-            <div className="flex flex-col bg-black/30 p-3 md:p-4 rounded-xl">
-              <span className="text-sm text-gray-400 mb-1">Sincronização</span>
-              <span className="text-yellow-400 font-bold text-lg">OFFLINE (Mock)</span>
+            <div className="flex flex-col bg-white border-2 border-leminski-blue p-3 md:p-4 rounded-xl shadow-[2px_2px_0px_#192B4D]">
+              <span className="text-sm font-bold text-leminski-blue/70 mb-1 uppercase">Sincronização</span>
+              <span className="text-yellow-600 font-black text-lg">OFFLINE (Mock)</span>
             </div>
             
-            <div className="flex flex-col bg-black/30 p-3 md:p-4 rounded-xl">
-              <span className="text-sm text-gray-400 mb-1">Total Registros</span>
-              <span className="font-bold text-2xl md:text-3xl text-white">{participants.length}</span>
+            <div className="flex flex-col bg-white border-2 border-leminski-blue p-3 md:p-4 rounded-xl shadow-[2px_2px_0px_#192B4D]">
+              <span className="text-sm font-bold text-leminski-blue/70 mb-1 uppercase">Total Registros</span>
+              <span className="font-black text-2xl md:text-3xl text-leminski-blue">{participants.length}</span>
             </div>
           </div>
 
-          <hr className="border-gray-700" />
+          <hr className="border-leminski-blue/30 border-2" />
 
           <div className="space-y-4">
             <button 
               onClick={handleExport}
-              className="w-full py-3 md:py-4 bg-blue-600 hover:bg-blue-500 rounded-xl font-bold flex flex-col items-center justify-center transition text-sm md:text-base"
+              className="w-full py-3 md:py-4 bg-leminski-blue text-white border-2 border-leminski-blue rounded-xl font-bold flex flex-col items-center justify-center transition text-sm md:text-base shadow-[4px_4px_0px_#192B4D] active:translate-y-1 active:shadow-none hover:bg-leminski-blue/90"
             >
               <Download className="w-5 h-5 mb-1" /> Exportar JSON
             </button>
 
             <button 
               onClick={() => setRankingClosed(!rankingClosed)}
-              className={`w-full py-3 md:py-4 rounded-xl font-bold flex flex-col items-center justify-center transition text-sm md:text-base ${rankingClosed ? 'bg-red-600 hover:bg-red-500' : 'bg-gray-700 hover:bg-gray-600'}`}
+              className={`w-full py-3 md:py-4 border-2 border-leminski-blue rounded-xl font-bold flex flex-col items-center justify-center transition text-sm md:text-base shadow-[4px_4px_0px_#192B4D] active:translate-y-1 active:shadow-none text-white ${rankingClosed ? 'bg-red-500 hover:bg-red-600' : 'bg-orange-500 hover:bg-orange-600'}`}
             >
               <ShieldAlert className="w-5 h-5 mb-1" /> 
               {rankingClosed ? "Abrir Ranking" : "Encerrar Ranking"}
@@ -99,7 +99,7 @@ export default function AdminPanel() {
 
             <button 
               onClick={handleClear}
-              className="w-full py-3 md:py-4 bg-red-900/50 text-red-400 border border-red-900 hover:bg-red-900/80 rounded-xl font-bold flex flex-col items-center justify-center transition mt-4 text-sm md:text-base"
+              className="w-full py-3 md:py-4 bg-white text-red-600 border-2 border-red-600 hover:bg-red-50 rounded-xl font-bold flex flex-col items-center justify-center transition mt-4 text-sm md:text-base shadow-[4px_4px_0px_#EF4444] active:translate-y-1 active:shadow-none"
             >
               <Trash2 className="w-5 h-5 mb-1" /> Limpar Banco
             </button>
@@ -109,45 +109,45 @@ export default function AdminPanel() {
         {/* Main Content Area - Table */}
         <div className="lg:col-span-3 glass-panel p-4 md:p-6 rounded-2xl flex flex-col min-h-[500px]">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 space-y-4 md:space-y-0">
-            <h2 className="text-xl md:text-2xl font-bold">Participantes Locais</h2>
+            <h2 className="text-xl md:text-2xl font-black uppercase text-leminski-blue">Participantes Locais</h2>
             <div className="relative w-full md:w-80">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-leminski-blue/50 w-5 h-5" />
               <input 
                 type="text" 
                 placeholder="Buscar CPF ou Nome..."
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                className="bg-black/50 border border-gray-700 rounded-full py-2 pl-10 pr-4 text-white focus:outline-none focus:border-pink-500 w-full"
+                className="bg-white border-2 border-leminski-blue rounded-full py-2 pl-10 pr-4 text-leminski-blue font-bold focus:outline-none focus:border-leminski-red focus:ring-4 focus:ring-leminski-red/20 w-full shadow-[2px_2px_0px_#192B4D]"
               />
             </div>
           </div>
 
-          <div className="flex-1 overflow-x-auto rounded-xl border border-gray-800 bg-black/20">
+          <div className="flex-1 overflow-x-auto rounded-xl border-4 border-leminski-blue bg-white shadow-[4px_4px_0px_#192B4D]">
             <table className="w-full text-left text-sm whitespace-nowrap min-w-[700px]">
-              <thead className="bg-gray-900 border-b border-gray-800">
+              <thead className="bg-leminski-blue border-b-4 border-leminski-blue">
                 <tr>
-                  <th className="p-4 font-semibold text-gray-300">Data/Hora</th>
-                  <th className="p-4 font-semibold text-gray-300">Nome</th>
-                  <th className="p-4 font-semibold text-gray-300">CPF</th>
-                  <th className="p-4 font-semibold text-gray-300">Contato</th>
-                  <th className="p-4 font-semibold text-right text-gray-300">Pontos</th>
-                  <th className="p-4 font-semibold text-right text-gray-300">Tempo (ms)</th>
+                  <th className="p-4 font-black text-white uppercase tracking-wider">Data/Hora</th>
+                  <th className="p-4 font-black text-white uppercase tracking-wider">Nome</th>
+                  <th className="p-4 font-black text-white uppercase tracking-wider">CPF</th>
+                  <th className="p-4 font-black text-white uppercase tracking-wider">Contato</th>
+                  <th className="p-4 font-black text-right text-white uppercase tracking-wider">Pontos</th>
+                  <th className="p-4 font-black text-right text-white uppercase tracking-wider">Tempo (ms)</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-800">
+              <tbody className="divide-y-2 divide-leminski-blue/20">
                 {filtered.map(p => (
-                  <tr key={p.id} className="hover:bg-gray-800/50 transition">
-                    <td className="p-4 text-gray-400">{new Date(p.playedAt).toLocaleString('pt-BR')}</td>
-                    <td className="p-4 font-medium">{p.fullName} <br/><span className="text-xs text-gray-500">{p.displayName}</span></td>
-                    <td className="p-4">{p.cpf}</td>
-                    <td className="p-4">{p.contact}</td>
-                    <td className="p-4 text-right font-bold text-pink-400">{p.score}</td>
-                    <td className="p-4 text-right text-gray-300">{p.timeMs}</td>
+                  <tr key={p.id} className="hover:bg-leminski-peach/30 transition">
+                    <td className="p-4 text-leminski-blue font-medium">{new Date(p.playedAt).toLocaleString('pt-BR')}</td>
+                    <td className="p-4 font-bold text-leminski-blue">{p.fullName} <br/><span className="text-xs text-leminski-blue/60">{p.displayName}</span></td>
+                    <td className="p-4 font-medium text-leminski-blue">{p.cpf}</td>
+                    <td className="p-4 font-medium text-leminski-blue">{p.contact}</td>
+                    <td className="p-4 text-right font-black text-leminski-red">{p.score}</td>
+                    <td className="p-4 text-right font-bold text-leminski-blue/70">{p.timeMs}</td>
                   </tr>
                 ))}
                 {filtered.length === 0 && (
                   <tr>
-                    <td colSpan={6} className="p-8 text-center text-gray-500">
+                    <td colSpan={6} className="p-8 text-center text-leminski-blue/50 font-bold text-lg">
                       Nenhum registro encontrado.
                     </td>
                   </tr>

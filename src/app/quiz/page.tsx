@@ -154,36 +154,38 @@ export default function Quiz() {
     <div className="flex flex-col w-full min-h-full p-4 md:p-10 overflow-y-auto">
       <header className="flex flex-col md:flex-row items-center justify-between mb-6 md:mb-12 space-y-4 md:space-y-0">
         <div className="flex space-x-2 md:space-x-4">
-          <div className="glass-panel px-4 py-2 md:px-6 md:py-3 rounded-full text-sm md:text-2xl font-bold text-leminski-pink whitespace-nowrap">
+          <div className="glass-panel px-4 py-2 md:px-6 md:py-3 rounded-full text-sm md:text-2xl font-bold text-leminski-blue whitespace-nowrap">
             Pergunta {currentIndex + 1} / {questions.length}
           </div>
-          <div className={`glass-panel px-4 py-2 md:px-6 md:py-3 rounded-full text-xs md:text-xl font-bold uppercase tracking-widest ${levelInfo.color}`}>
+          <div className={`glass-panel px-4 py-2 md:px-6 md:py-3 rounded-full text-xs md:text-xl font-bold uppercase tracking-widest ${
+            levelInfo.label === 'Fácil' ? 'text-green-600' : levelInfo.label === 'Média' ? 'text-yellow-600' : 'text-red-600'
+          }`}>
             {levelInfo.label}
           </div>
         </div>
         
-        <div className={`glass-panel px-4 py-2 md:px-6 md:py-3 rounded-full flex items-center text-xl md:text-3xl font-bold ${timeLeft <= 5 ? 'text-red-500 animate-pulse' : 'text-white'}`}>
+        <div className={`glass-panel px-4 py-2 md:px-6 md:py-3 rounded-full flex items-center text-xl md:text-3xl font-black ${timeLeft <= 5 ? 'text-red-600 animate-pulse' : 'text-leminski-blue'}`}>
           <Timer className="w-5 h-5 mr-2 md:w-8 md:h-8 md:mr-3" />
           00:{timeLeft.toString().padStart(2, '0')}
         </div>
       </header>
 
       <div className="flex-1 flex flex-col justify-center max-w-4xl mx-auto w-full space-y-6 md:space-y-12 pb-10 md:pb-20 my-auto">
-        <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold leading-tight text-center drop-shadow-md text-white">
+        <h2 className="text-2xl md:text-4xl lg:text-5xl font-black leading-tight text-center text-leminski-light drop-shadow-[4px_4px_0px_#192B4D]">
           {currentQuestion.text}
         </h2>
 
         <div className="flex flex-col space-y-3 md:space-y-6 w-full">
           {currentQuestion.options.map((opt) => {
-            let btnClass = "glass-panel text-left p-4 md:p-8 rounded-2xl md:rounded-3xl text-lg md:text-2xl lg:text-3xl font-medium transition-all active:scale-95 text-gray-100 hover:bg-white/10";
+            let btnClass = "glass-panel text-left p-4 md:p-8 rounded-2xl md:rounded-3xl text-lg md:text-2xl lg:text-3xl font-bold transition-all active:translate-y-1 hover:bg-leminski-peach text-leminski-blue";
             
             if (showFeedback) {
               if (opt.isCorrect) {
-                btnClass = "bg-green-500/80 border-2 border-green-400 text-white p-4 md:p-8 rounded-2xl md:rounded-3xl text-lg md:text-2xl lg:text-3xl font-medium shadow-[0_0_20px_rgba(34,197,94,0.5)]";
+                btnClass = "bg-green-500 border-4 border-leminski-blue text-white p-4 md:p-8 rounded-2xl md:rounded-3xl text-lg md:text-2xl lg:text-3xl font-bold shadow-[4px_4px_0px_#192B4D]";
               } else if (selectedOption === opt.id) {
-                btnClass = "bg-red-500/80 border-2 border-red-400 text-white p-4 md:p-8 rounded-2xl md:rounded-3xl text-lg md:text-2xl lg:text-3xl font-medium shadow-[0_0_20px_rgba(239,68,68,0.5)]";
+                btnClass = "bg-red-500 border-4 border-leminski-blue text-white p-4 md:p-8 rounded-2xl md:rounded-3xl text-lg md:text-2xl lg:text-3xl font-bold shadow-[4px_4px_0px_#192B4D]";
               } else {
-                btnClass = "glass-panel opacity-40 text-left p-4 md:p-8 rounded-2xl md:rounded-3xl text-lg md:text-2xl lg:text-3xl font-medium text-gray-300";
+                btnClass = "glass-panel opacity-50 text-left p-4 md:p-8 rounded-2xl md:rounded-3xl text-lg md:text-2xl lg:text-3xl font-bold text-leminski-blue";
               }
             }
 

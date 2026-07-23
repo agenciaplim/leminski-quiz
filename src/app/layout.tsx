@@ -16,16 +16,13 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400..900&display=swap" rel="stylesheet" />
       </head>
       <body
         suppressHydrationWarning
-        className={`font-sans antialiased bg-[#0b1e36] text-white h-screen w-screen overflow-hidden flex flex-col`}
+        className={`font-sans antialiased bg-leminski-red text-leminski-light h-screen w-screen overflow-hidden flex flex-col`}
       >
-        <div className="relative flex-1 w-full h-full max-w-[1080px] mx-auto overflow-hidden bg-gradient-to-br from-[#164B8B] to-[#0b1e36]">
-          {/* Efeitos de luz no fundo usando as cores da marca */}
-          <div className="absolute top-[-20%] left-[-10%] w-[800px] h-[800px] bg-[#EB4C2C] rounded-full mix-blend-screen filter blur-[200px] opacity-30 animate-pulse"></div>
-          <div className="absolute bottom-[-10%] right-[-10%] w-[900px] h-[900px] bg-[#F08EA5] rounded-full mix-blend-screen filter blur-[200px] opacity-20"></div>
+        <div className="relative flex-1 w-full h-full max-w-[1080px] mx-auto overflow-hidden bg-leminski-red">
           
           <main className="relative z-10 w-full h-full flex flex-col no-scrollbar overflow-y-auto">
             {children}

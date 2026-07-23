@@ -1,17 +1,18 @@
 @import "tailwindcss";
 
 @theme {
-  --color-leminski-peach: #FACCAB;
-  --color-leminski-pink: #F08EA5;
-  --color-leminski-red: #EB4C2C;
-  --color-leminski-blue: #164B8B;
+  --color-leminski-peach: #F4C3A3;
+  --color-leminski-pink: #E99D8F;
+  --color-leminski-red: #DF5D36;
+  --color-leminski-blue: #192B4D;
+  --color-leminski-light: #FDFBF7;
 }
 
 @layer base {
   body {
-    font-family: 'Orbitron', sans-serif !important;
-    background-color: #0b1e36;
-    color: white;
+    font-family: 'Outfit', sans-serif !important;
+    background-color: #DF5D36;
+    color: #FDFBF7;
     overscroll-behavior-y: none;
     user-select: none;
   }
@@ -27,20 +28,23 @@
 
 @layer utilities {
   .glass-panel {
-    background: rgba(22, 75, 139, 0.25);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(240, 142, 165, 0.2);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    background: #FDFBF7;
+    border: 3px solid #192B4D;
+    border-radius: 1.5rem;
+    box-shadow: 6px 6px 0px #192B4D;
+    color: #192B4D;
+    transition: all 0.2s ease;
   }
   
   .glass-button {
-    background: linear-gradient(135deg, #EB4C2C 0%, #F08EA5 100%);
-    box-shadow: 0 4px 20px rgba(235, 76, 44, 0.5);
-    color: white;
-    transition: all 0.2s ease;
+    background: #DF5D36;
+    border: 3px solid #192B4D;
+    box-shadow: 4px 4px 0px #192B4D;
+    color: #FDFBF7;
+    transition: all 0.1s ease;
   }
   .glass-button:active {
-    transform: scale(0.95);
+    transform: translate(4px, 4px);
+    box-shadow: 0px 0px 0px #192B4D;
   }
 }

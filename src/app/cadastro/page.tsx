@@ -28,7 +28,6 @@ export default function Cadastro() {
     setError("");
 
     try {
-      // Check if CPF already exists
       const existing = await db.participants.where("cpf").equals(formData.cpf).first();
       
       if (existing) {
@@ -37,7 +36,6 @@ export default function Cadastro() {
         return;
       }
 
-      // Format display name if empty
       let displayName = formData.displayName.trim();
       if (!displayName) {
         const names = formData.fullName.trim().split(" ");
@@ -46,7 +44,6 @@ export default function Cadastro() {
           : names[0];
       }
 
-      // Save to db
       await db.participants.add({
         ...formData,
         displayName,
@@ -56,7 +53,6 @@ export default function Cadastro() {
         synced: false,
       });
 
-      // Save CPF to session to identify user during quiz
       sessionStorage.setItem("quiz_cpf", formData.cpf);
 
       router.push("/instrucoes");
@@ -71,21 +67,21 @@ export default function Cadastro() {
   return (
     <div className="flex flex-col w-full min-h-full p-4 md:p-10">
       <header className="flex items-center mb-6 md:mb-10 shrink-0">
-        <Link href="/" className="p-3 md:p-4 rounded-full glass-panel mr-4 md:mr-6 active:scale-95 transition-transform shrink-0">
-          <ChevronLeft className="w-6 h-6 md:w-8 md:h-8" />
+        <Link href="/" className="p-3 md:p-4 rounded-full glass-panel flex items-center justify-center mr-4 md:mr-6 active:translate-y-1 transition-transform shrink-0 shadow-[4px_4px_0px_#192B4D]">
+          <ChevronLeft className="w-6 h-6 md:w-8 md:h-8 text-leminski-blue" />
         </Link>
-        <h1 className="text-2xl md:text-4xl font-bold">Identificação</h1>
+        <h1 className="text-2xl md:text-4xl font-black text-leminski-light drop-shadow-[2px_2px_0px_#192B4D]">Identificação</h1>
       </header>
 
       <form onSubmit={handleSubmit} className="flex-1 flex flex-col space-y-4 md:space-y-6 overflow-y-auto no-scrollbar pb-10">
         
         {error && (
-          <div className="glass-panel bg-red-900/50 border-red-500 p-4 md:p-6 rounded-2xl flex items-start">
-            <AlertCircle className="w-6 h-6 md:w-8 md:h-8 text-red-400 mr-3 md:mr-4 shrink-0" />
+          <div className="bg-white border-4 border-red-500 shadow-[4px_4px_0px_#EF4444] p-4 md:p-6 rounded-2xl md:rounded-3xl flex items-start">
+            <AlertCircle className="w-6 h-6 md:w-8 md:h-8 text-red-500 mr-3 md:mr-4 shrink-0" />
             <div className="flex-1">
-              <p className="text-base md:text-xl text-white font-medium">{error}</p>
+              <p className="text-base md:text-xl text-red-600 font-bold">{error}</p>
               {error.includes("já participou") && (
-                <Link href="/ranking" className="mt-3 md:mt-4 inline-block bg-white text-red-900 px-4 md:px-6 py-2 md:py-3 rounded-full font-bold text-sm md:text-base">
+                <Link href="/ranking" className="mt-3 md:mt-4 inline-block bg-leminski-blue text-white px-4 md:px-6 py-2 md:py-3 rounded-full font-bold text-sm md:text-base">
                   Ver Ranking
                 </Link>
               )}
@@ -95,55 +91,55 @@ export default function Cadastro() {
 
         <div className="glass-panel p-4 md:p-8 rounded-2xl md:rounded-3xl space-y-4 md:space-y-6">
           <div>
-            <label className="block text-base md:text-xl font-medium mb-1 md:mb-2 text-gray-200">Nome Completo</label>
+            <label className="block text-base md:text-xl font-bold mb-1 md:mb-2 text-leminski-blue">Nome Completo</label>
             <input 
               required
               type="text" 
-              className="w-full bg-black/50 border border-leminski-blue/50 rounded-xl md:rounded-2xl p-3 md:p-5 text-lg md:text-2xl text-white focus:outline-none focus:border-leminski-pink"
+              className="w-full bg-white border-2 border-leminski-blue/30 rounded-xl md:rounded-2xl p-3 md:p-5 text-lg md:text-2xl text-leminski-blue focus:outline-none focus:border-leminski-red focus:ring-4 focus:ring-leminski-red/20 font-medium"
               value={formData.fullName}
               onChange={e => setFormData({...formData, fullName: e.target.value})}
             />
           </div>
           
           <div>
-            <label className="block text-base md:text-xl font-medium mb-1 md:mb-2 text-gray-200">CPF (Somente números)</label>
+            <label className="block text-base md:text-xl font-bold mb-1 md:mb-2 text-leminski-blue">CPF (Somente números)</label>
             <input 
               required
               type="number" 
-              className="w-full bg-black/50 border border-leminski-blue/50 rounded-xl md:rounded-2xl p-3 md:p-5 text-lg md:text-2xl text-white focus:outline-none focus:border-leminski-pink"
+              className="w-full bg-white border-2 border-leminski-blue/30 rounded-xl md:rounded-2xl p-3 md:p-5 text-lg md:text-2xl text-leminski-blue focus:outline-none focus:border-leminski-red focus:ring-4 focus:ring-leminski-red/20 font-medium"
               value={formData.cpf}
               onChange={e => setFormData({...formData, cpf: e.target.value})}
             />
           </div>
 
           <div>
-            <label className="block text-base md:text-xl font-medium mb-1 md:mb-2 text-gray-200">WhatsApp / E-mail</label>
+            <label className="block text-base md:text-xl font-bold mb-1 md:mb-2 text-leminski-blue">WhatsApp / E-mail</label>
             <input 
               required
               type="text" 
-              className="w-full bg-black/50 border border-leminski-blue/50 rounded-xl md:rounded-2xl p-3 md:p-5 text-lg md:text-2xl text-white focus:outline-none focus:border-leminski-pink"
+              className="w-full bg-white border-2 border-leminski-blue/30 rounded-xl md:rounded-2xl p-3 md:p-5 text-lg md:text-2xl text-leminski-blue focus:outline-none focus:border-leminski-red focus:ring-4 focus:ring-leminski-red/20 font-medium"
               value={formData.contact}
               onChange={e => setFormData({...formData, contact: e.target.value})}
             />
           </div>
 
           <div>
-            <label className="block text-base md:text-xl font-medium mb-1 md:mb-2 text-gray-200">Cidade / Estado</label>
+            <label className="block text-base md:text-xl font-bold mb-1 md:mb-2 text-leminski-blue">Cidade / Estado</label>
             <input 
               required
               type="text" 
-              className="w-full bg-black/50 border border-leminski-blue/50 rounded-xl md:rounded-2xl p-3 md:p-5 text-lg md:text-2xl text-white focus:outline-none focus:border-leminski-pink"
+              className="w-full bg-white border-2 border-leminski-blue/30 rounded-xl md:rounded-2xl p-3 md:p-5 text-lg md:text-2xl text-leminski-blue focus:outline-none focus:border-leminski-red focus:ring-4 focus:ring-leminski-red/20 font-medium"
               value={formData.location}
               onChange={e => setFormData({...formData, location: e.target.value})}
             />
           </div>
 
           <div>
-            <label className="block text-base md:text-xl font-medium mb-1 md:mb-2 text-gray-200">Nome para o Ranking (Apelido)</label>
+            <label className="block text-base md:text-xl font-bold mb-1 md:mb-2 text-leminski-blue">Nome para o Ranking (Apelido)</label>
             <input 
               type="text" 
               placeholder="Opcional. Ex: João M."
-              className="w-full bg-black/50 border border-leminski-blue/50 rounded-xl md:rounded-2xl p-3 md:p-5 text-lg md:text-2xl text-white focus:outline-none focus:border-leminski-pink placeholder-gray-600"
+              className="w-full bg-white border-2 border-leminski-blue/30 rounded-xl md:rounded-2xl p-3 md:p-5 text-lg md:text-2xl text-leminski-blue focus:outline-none focus:border-leminski-red focus:ring-4 focus:ring-leminski-red/20 font-medium placeholder-leminski-blue/40"
               value={formData.displayName}
               onChange={e => setFormData({...formData, displayName: e.target.value})}
             />
@@ -151,45 +147,45 @@ export default function Cadastro() {
         </div>
 
         <div className="glass-panel p-4 md:p-8 rounded-2xl md:rounded-3xl space-y-4 md:space-y-6">
-          <h3 className="text-xl md:text-2xl font-bold text-leminski-pink mb-2 md:mb-4">Termos de Participação</h3>
+          <h3 className="text-xl md:text-2xl font-black text-leminski-red mb-2 md:mb-4">Termos de Participação</h3>
           
-          <label className="flex items-start space-x-3 md:space-x-4 cursor-pointer">
+          <label className="flex items-start space-x-3 md:space-x-4 cursor-pointer group">
             <input 
               required
               type="checkbox" 
-              className="w-6 h-6 md:w-8 md:h-8 mt-1 rounded border-gray-600 text-leminski-red focus:ring-leminski-red bg-black/50 shrink-0"
+              className="w-6 h-6 md:w-8 md:h-8 mt-1 rounded border-2 border-leminski-blue text-leminski-red focus:ring-leminski-red shrink-0"
               checked={formData.termsAccepted}
               onChange={e => setFormData({...formData, termsAccepted: e.target.checked})}
             />
-            <span className="text-sm md:text-xl text-gray-300">Aceito participar do quiz e exibir meu nome/apelido e pontuação no ranking do evento.</span>
+            <span className="text-sm md:text-xl text-leminski-blue font-medium group-hover:text-leminski-red transition-colors">Aceito participar do quiz e exibir meu nome/apelido e pontuação no ranking do evento.</span>
           </label>
 
-          <label className="flex items-start space-x-3 md:space-x-4 cursor-pointer">
+          <label className="flex items-start space-x-3 md:space-x-4 cursor-pointer group">
             <input 
               required
               type="checkbox" 
-              className="w-6 h-6 md:w-8 md:h-8 mt-1 rounded border-gray-600 text-leminski-red focus:ring-leminski-red bg-black/50 shrink-0"
+              className="w-6 h-6 md:w-8 md:h-8 mt-1 rounded border-2 border-leminski-blue text-leminski-red focus:ring-leminski-red shrink-0"
               checked={formData.festivalAccepted}
               onChange={e => setFormData({...formData, festivalAccepted: e.target.checked})}
             />
-            <span className="text-sm md:text-xl text-gray-300">Autorizo o Festival Paulo Leminski a utilizar minhas informações para comunicações futuras.</span>
+            <span className="text-sm md:text-xl text-leminski-blue font-medium group-hover:text-leminski-red transition-colors">Autorizo o Festival Paulo Leminski a utilizar minhas informações para comunicações futuras.</span>
           </label>
 
-          <label className="flex items-start space-x-3 md:space-x-4 cursor-pointer">
+          <label className="flex items-start space-x-3 md:space-x-4 cursor-pointer group">
             <input 
               type="checkbox" 
-              className="w-6 h-6 md:w-8 md:h-8 mt-1 rounded border-gray-600 text-leminski-red focus:ring-leminski-red bg-black/50 shrink-0"
+              className="w-6 h-6 md:w-8 md:h-8 mt-1 rounded border-2 border-leminski-blue text-leminski-red focus:ring-leminski-red shrink-0"
               checked={formData.sponsorAccepted}
               onChange={e => setFormData({...formData, sponsorAccepted: e.target.checked})}
             />
-            <span className="text-sm md:text-xl text-gray-300">Autorizo o patrocinador desta ação a utilizar minhas informações para comunicações e ações promocionais.</span>
+            <span className="text-sm md:text-xl text-leminski-blue font-medium group-hover:text-leminski-red transition-colors">Autorizo o patrocinador desta ação a utilizar minhas informações para comunicações e ações promocionais.</span>
           </label>
         </div>
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-4 px-6 md:py-6 md:px-8 rounded-full glass-button text-xl md:text-3xl font-bold uppercase tracking-wider flex items-center justify-center mt-4 md:mt-6 shrink-0"
+          className="w-full py-4 px-6 md:py-6 md:px-8 rounded-full glass-button text-xl md:text-3xl font-black uppercase tracking-wider flex items-center justify-center mt-4 md:mt-6 shrink-0"
         >
           {loading ? "Aguarde..." : "Começar o Quiz"}
           {!loading && <ChevronRight className="ml-2 md:ml-4 w-6 h-6 md:w-10 md:h-10 shrink-0" />}
