@@ -28,20 +28,21 @@ export default function Cadastro() {
     setError("");
 
     try {
-      const existing = await db.participants.where("cpf").equals(formData.cpf).first();
-      
-      if (existing) {
-        setError("Você já participou deste quiz. Confira sua posição no ranking e boa sorte!");
-        setLoading(false);
-        return;
-      }
+      // REMOVIDO PARA TESTES
+      // const existing = await db.participants.where("cpf").equals(formData.cpf).first();
+      // 
+      // if (existing) {
+      //   setError("Você já participou deste quiz. Confira sua posição no ranking e boa sorte!");
+      //   setLoading(false);
+      //   return;
+      // }
 
       let displayName = formData.displayName.trim();
       if (!displayName) {
         const names = formData.fullName.trim().split(" ");
-        displayName = names.length > 1 
+        displayName = names.length > 1 && names[0] !== ""
           ? `${names[0]} ${names[names.length - 1].charAt(0)}.`
-          : names[0];
+          : names[0] || "Jogador Teste";
       }
 
       await db.participants.add({
@@ -93,7 +94,6 @@ export default function Cadastro() {
           <div>
             <label className="block text-base md:text-xl font-bold mb-1 md:mb-2 text-leminski-blue">Nome Completo</label>
             <input 
-              required
               type="text" 
               className="w-full bg-white border-2 border-leminski-blue/30 rounded-xl md:rounded-2xl p-3 md:p-5 text-lg md:text-2xl text-leminski-blue focus:outline-none focus:border-leminski-red focus:ring-4 focus:ring-leminski-red/20 font-medium"
               value={formData.fullName}
@@ -104,7 +104,6 @@ export default function Cadastro() {
           <div>
             <label className="block text-base md:text-xl font-bold mb-1 md:mb-2 text-leminski-blue">CPF (Somente números)</label>
             <input 
-              required
               type="number" 
               className="w-full bg-white border-2 border-leminski-blue/30 rounded-xl md:rounded-2xl p-3 md:p-5 text-lg md:text-2xl text-leminski-blue focus:outline-none focus:border-leminski-red focus:ring-4 focus:ring-leminski-red/20 font-medium"
               value={formData.cpf}
@@ -115,7 +114,6 @@ export default function Cadastro() {
           <div>
             <label className="block text-base md:text-xl font-bold mb-1 md:mb-2 text-leminski-blue">WhatsApp / E-mail</label>
             <input 
-              required
               type="text" 
               className="w-full bg-white border-2 border-leminski-blue/30 rounded-xl md:rounded-2xl p-3 md:p-5 text-lg md:text-2xl text-leminski-blue focus:outline-none focus:border-leminski-red focus:ring-4 focus:ring-leminski-red/20 font-medium"
               value={formData.contact}
@@ -126,7 +124,6 @@ export default function Cadastro() {
           <div>
             <label className="block text-base md:text-xl font-bold mb-1 md:mb-2 text-leminski-blue">Cidade / Estado</label>
             <input 
-              required
               type="text" 
               className="w-full bg-white border-2 border-leminski-blue/30 rounded-xl md:rounded-2xl p-3 md:p-5 text-lg md:text-2xl text-leminski-blue focus:outline-none focus:border-leminski-red focus:ring-4 focus:ring-leminski-red/20 font-medium"
               value={formData.location}
@@ -151,7 +148,6 @@ export default function Cadastro() {
           
           <label className="flex items-start space-x-3 md:space-x-4 cursor-pointer group">
             <input 
-              required
               type="checkbox" 
               className="w-6 h-6 md:w-8 md:h-8 mt-1 rounded border-2 border-leminski-blue text-leminski-red focus:ring-leminski-red shrink-0"
               checked={formData.termsAccepted}
@@ -162,7 +158,6 @@ export default function Cadastro() {
 
           <label className="flex items-start space-x-3 md:space-x-4 cursor-pointer group">
             <input 
-              required
               type="checkbox" 
               className="w-6 h-6 md:w-8 md:h-8 mt-1 rounded border-2 border-leminski-blue text-leminski-red focus:ring-leminski-red shrink-0"
               checked={formData.festivalAccepted}
