@@ -47,13 +47,13 @@ export default function Quiz() {
 
     const selectedQuestions = [...easy, ...medium, ...hard];
     
-    // Shuffle the 9 questions and their options
-    const shuffled = shuffle(selectedQuestions).map(q => ({
+    // Mantém a ordem (3 fáceis, 3 médias, 3 difíceis) e embaralha apenas as alternativas
+    const phaseOrdered = selectedQuestions.map(q => ({
       ...q,
       options: shuffle(q.options)
     }));
     
-    setQuestions(shuffled);
+    setQuestions(phaseOrdered);
     startTime.current = Date.now();
   }, [router]);
 
