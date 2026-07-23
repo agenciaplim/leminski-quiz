@@ -22,8 +22,7 @@ export default function RootLayout({
         suppressHydrationWarning
         className={`font-sans antialiased bg-leminski-red text-leminski-light h-screen w-screen overflow-hidden flex flex-col`}
       >
-        <div className="relative flex-1 w-full h-full max-w-[1080px] mx-auto overflow-hidden bg-leminski-red">
-          
+        <div className="relative flex-1 w-full h-full mx-auto bg-leminski-red flex flex-col">
           <main className="relative z-10 w-full h-full flex flex-col no-scrollbar overflow-y-auto">
             {children}
           </main>

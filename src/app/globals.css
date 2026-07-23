@@ -17,6 +17,15 @@
     user-select: none;
   }
 
+  /* Esconder barras de rolagem globalmente */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  * {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
