@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 
-type SoundName = 'click' | 'start' | 'finish' | 'ranking' | 'select';
+type SoundName = 'click' | 'start' | 'finish' | 'ranking' | 'select' | 'wrong';
 
 type AudioContextType = {
   isMuted: boolean;
@@ -16,6 +16,7 @@ const SOUND_FILES: Record<SoundName, string> = {
   finish: '/audio/finish.wav',
   ranking: '/audio/ranking.wav',
   select: '/audio/select.wav',
+  wrong: '/audio/wrong.wav',
 };
 
 const AudioContext = createContext<AudioContextType | undefined>(undefined);

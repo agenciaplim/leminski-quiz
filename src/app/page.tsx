@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
+import { useAudio } from "@/contexts/AudioContext";
 
 export default function Home() {
+  const { playSfx } = useAudio();
   return (
     <div className="flex flex-col items-center justify-between w-full min-h-full p-4 md:p-10 text-center overflow-y-auto">
       
@@ -42,6 +44,7 @@ export default function Home() {
       <div className="w-full pb-8 md:pb-20 shrink-0">
         <Link
           href="/cadastro"
+          onClick={() => playSfx('select')}
           className="inline-flex items-center justify-center w-fit mx-auto py-4 px-8 md:py-6 md:px-12 rounded-full glass-button text-xl md:text-2xl lg:text-3xl font-black uppercase tracking-wider animate-bounce whitespace-nowrap"
         >
           Tocar para Iniciar
