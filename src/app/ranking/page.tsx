@@ -18,40 +18,36 @@ export default function Ranking() {
   useEffect(() => {
     const fetchRanking = async () => {
       try {
-        // 1. Pega do IndexedDB local (sempre rápido e garantido)
-        const local = await db.participants.toArray();
-        let remote: any[] = [];
+        // 1. Pega do IndexedDB local
+        const localAll = await db.participants.toArray();
+        let finalData: any[] = [];
         
-        // 2. Se tiver internet, tenta puxar do Supabase
+        // 2. Se tiver internet, tenta puxar do Supabase de forma segura (SEM CPF)
         if (navigator.onLine) {
           const { data, error } = await supabase
             .from('participants')
-            .select('*')
+            .select('id, "displayName", score, "timeMs"')
             .order('score', { ascending: false })
             .order('timeMs', { ascending: true })
             .limit(50);
             
           if (!error && data) {
-            remote = data;
+            // Pegar apenas os locais que ainda NÃO subiram pra nuvem
+            const localUnsynced = localAll.filter(p => !p.synced);
+            
+            // Junta os da nuvem com os que estão na fila local
+            finalData = [...data, ...localUnsynced];
+          } else {
+            // Se falhar a requisição, usa o cache local inteiro
+            finalData = localAll;
           }
+        } else {
+          // Sem internet, usa o cache local inteiro
+          finalData = localAll;
         }
 
-        // 3. Funde os dois (para garantir que alguém que acabou de jogar offline apareça + dados do outro totem)
-        const map = new Map();
-        
-        // Coloca os remotos no map (chave = cpf)
-        remote.forEach(p => map.set(p.cpf, p));
-        
-        // Coloca/Atualiza os locais (se for mais recente ou se não estiver no remoto)
-        local.forEach(p => {
-          if (!map.has(p.cpf) || p.score > map.get(p.cpf).score) {
-             map.set(p.cpf, p);
-          }
-        });
-
-        // 4. Converte devolta pra array e ordena
-        const all = Array.from(map.values());
-        const sorted = all.sort((a, b) => {
+        // 3. Ordena os dados finais
+        const sorted = finalData.sort((a, b) => {
           if (b.score !== a.score) return b.score - a.score;
           return a.timeMs - b.timeMs; // Menor tempo
         });
