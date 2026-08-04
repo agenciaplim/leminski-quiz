@@ -23,9 +23,9 @@ export default function SyncEngine() {
           return;
         }
 
-        // Prepare data for Supabase (remove local 'id')
+        // Prepare data for Supabase (remove local 'id' and 'synced')
         const dataToInsert = unsynced.map(p => {
-          const { id, ...rest } = p;
+          const { id, synced, ...rest } = p;
           return rest;
         });
 
