@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { quizQuestions, Question, Option } from "@/lib/quizData";
 import { db } from "@/lib/db";
+import { useAudio } from "@/contexts/AudioContext";
 import { Timer } from "lucide-react";
 
 // Fisher-Yates shuffle
@@ -18,6 +19,7 @@ function shuffle<T>(array: T[]): T[] {
 
 export default function Quiz() {
   const router = useRouter();
+  const { playSfx } = useAudio();
   const [cpf, setCpf] = useState<string | null>(null);
   
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -105,6 +107,7 @@ export default function Quiz() {
       }
     }
     
+    playSfx('finish');
     router.push("/resultado");
   };
 
@@ -127,10 +130,13 @@ export default function Quiz() {
 
     let newKnowledgeScore = knowledgeScore;
     if (option.isCorrect) {
+      playSfx('correct');
       const qLevel = questions[currentIndex].level;
       const points = qLevel === 'easy' ? 100 : qLevel === 'medium' ? 200 : 300;
       newKnowledgeScore += points;
       setKnowledgeScore(newKnowledgeScore);
+    } else {
+      playSfx('wrong');
     }
 
     setTimeout(() => {
