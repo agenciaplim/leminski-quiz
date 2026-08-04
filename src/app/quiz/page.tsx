@@ -112,6 +112,7 @@ export default function Quiz() {
   };
 
   const advanceQuestion = (currentKnowledgeScore: number) => {
+    playSfx('click');
     if (currentIndex + 1 < questions.length) {
       setCurrentIndex(prev => prev + 1);
       setSelectedOption(null);
@@ -130,13 +131,10 @@ export default function Quiz() {
 
     let newKnowledgeScore = knowledgeScore;
     if (option.isCorrect) {
-      playSfx('correct');
       const qLevel = questions[currentIndex].level;
       const points = qLevel === 'easy' ? 100 : qLevel === 'medium' ? 200 : 300;
       newKnowledgeScore += points;
       setKnowledgeScore(newKnowledgeScore);
-    } else {
-      playSfx('wrong');
     }
 
     setTimeout(() => {

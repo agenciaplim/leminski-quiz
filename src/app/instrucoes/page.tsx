@@ -2,8 +2,15 @@
 
 import Link from "next/link";
 import { ChevronRight, Brain, Clock, Trophy } from "lucide-react";
+import { useAudio } from "@/contexts/AudioContext";
+import { useEffect } from "react";
 
 export default function Instrucoes() {
+  const { playSfx } = useAudio();
+
+  useEffect(() => {
+    playSfx('start');
+  }, [playSfx]);
   return (
     <div className="flex flex-col items-center justify-start w-full min-h-full p-4 md:p-10 text-center overflow-y-auto">
       <h1 className="text-3xl md:text-5xl font-black tracking-widest text-leminski-light uppercase mb-6 md:mb-8 drop-shadow-[4px_4px_0px_#192B4D] mt-4 md:mt-10">

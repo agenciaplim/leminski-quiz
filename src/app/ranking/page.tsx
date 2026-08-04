@@ -5,9 +5,15 @@ import { db, Participant } from "@/lib/db";
 import { supabase } from "@/lib/supabase";
 import { Trophy, ArrowLeft, Medal } from "lucide-react";
 import Link from "next/link";
+import { useAudio } from "@/contexts/AudioContext";
 
 export default function Ranking() {
   const [topPlayers, setTopPlayers] = useState<Participant[]>([]);
+  const { playSfx } = useAudio();
+
+  useEffect(() => {
+    playSfx('ranking');
+  }, [playSfx]);
 
   useEffect(() => {
     const fetchRanking = async () => {

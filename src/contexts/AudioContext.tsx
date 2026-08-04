@@ -2,10 +2,19 @@
 
 import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 
+type SoundName = 'click' | 'start' | 'finish' | 'ranking';
+
 type AudioContextType = {
   isMuted: boolean;
   toggleMute: () => void;
-  playSfx: (sound: 'click' | 'correct' | 'wrong' | 'finish') => void;
+  playSfx: (sound: SoundName) => void;
+};
+
+const SOUND_FILES: Record<SoundName, string> = {
+  click: '/audio/click.wav',
+  start: '/audio/start.wav',
+  finish: '/audio/finish.wav',
+  ranking: '/audio/ranking.wav',
 };
 
 const AudioContext = createContext<AudioContextType | undefined>(undefined);
@@ -19,7 +28,7 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
     // Inicializar a música de fundo
     bgMusicRef.current = new Audio('/audio/bg-music.mp3');
     bgMusicRef.current.loop = true;
-    bgMusicRef.current.volume = 0.3; // Volume da música um pouco mais baixo
+    bgMusicRef.current.volume = 0.15; // Volume bem baixo
 
     return () => {
       if (bgMusicRef.current) {
@@ -44,12 +53,11 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
     setIsMuted(prev => !prev);
   };
 
-  const playSfx = (sound: 'click' | 'correct' | 'wrong' | 'finish') => {
+  const playSfx = (sound: SoundName) => {
     if (isMuted) return;
     
     try {
-      const audio = new Audio(`/audio/${sound}.mp3`);
-      // Volume dos efeitos um pouco mais alto
+      const audio = new Audio(SOUND_FILES[sound]);
       audio.volume = 0.8;
       audio.play().catch(e => console.log('Erro ao tocar SFX', e));
     } catch (err) {
