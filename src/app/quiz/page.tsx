@@ -126,6 +126,7 @@ export default function Quiz() {
   const handleOptionClick = (option: Option) => {
     if (showFeedback) return;
     
+    playSfx('select');
     setSelectedOption(option.id);
     setShowFeedback(true);
 
