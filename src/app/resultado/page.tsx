@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { db, Participant } from "@/lib/db";
+import { supabase } from "@/lib/supabase";
 import { Trophy, Clock, Star, ArrowRight, BarChart2 } from "lucide-react";
 
 export default function Resultado() {
@@ -29,15 +30,40 @@ export default function Resultado() {
       setParticipant(me);
 
       // Calculate Rank
-      const all = await db.participants.toArray();
-      const sorted = all.sort((a, b) => {
-        if (b.score !== a.score) return b.score - a.score;
-        return a.timeMs - b.timeMs; // Menor tempo ganha em caso de empate
-      });
+      try {
+        const local = await db.participants.toArray();
+        let remote: any[] = [];
+        
+        if (navigator.onLine) {
+          const { data } = await supabase
+            .from('participants')
+            .select('*')
+            .order('score', { ascending: false })
+            .order('timeMs', { ascending: true });
+            
+          if (data) remote = data;
+        }
 
-      const position = sorted.findIndex(p => p.cpf === sessionCpf) + 1;
-      setRankPosition(position);
-      setTotalPlayers(sorted.length);
+        const map = new Map();
+        remote.forEach(p => map.set(p.cpf, p));
+        local.forEach(p => {
+          if (!map.has(p.cpf) || p.score > map.get(p.cpf).score) {
+             map.set(p.cpf, p);
+          }
+        });
+
+        const all = Array.from(map.values());
+        const sorted = all.sort((a, b) => {
+          if (b.score !== a.score) return b.score - a.score;
+          return a.timeMs - b.timeMs;
+        });
+
+        const position = sorted.findIndex(p => p.cpf === sessionCpf) + 1;
+        setRankPosition(position > 0 ? position : 1);
+        setTotalPlayers(sorted.length > 0 ? sorted.length : 1);
+      } catch (err) {
+        console.error("Erro ao calcular rank", err);
+      }
     };
 
     fetchResults();
@@ -85,7 +111,7 @@ export default function Resultado() {
 
           <div className="w-full bg-leminski-peach border-4 border-leminski-blue p-4 md:p-8 rounded-2xl md:rounded-3xl flex flex-col items-center justify-center shadow-[4px_4px_0px_#192B4D]">
             <Trophy className="w-8 h-8 md:w-16 md:h-16 text-leminski-blue mb-2 md:mb-4" />
-            <span className="text-base md:text-2xl text-leminski-blue font-bold mb-1 md:mb-2 uppercase tracking-wider">Sua Posição (Local)</span>
+            <span className="text-base md:text-2xl text-leminski-blue font-bold mb-1 md:mb-2 uppercase tracking-wider">Sua Posição Oficial</span>
             <span className="text-5xl md:text-7xl font-black text-leminski-blue mb-4 md:mb-8">
               {rankPosition}º <span className="text-xl md:text-3xl font-bold ml-1 md:ml-2">de {totalPlayers}</span>
             </span>

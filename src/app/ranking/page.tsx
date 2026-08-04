@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { db, Participant } from "@/lib/db";
+import { supabase } from "@/lib/supabase";
 import { Trophy, ArrowLeft, Medal } from "lucide-react";
 import Link from "next/link";
 
@@ -10,12 +11,49 @@ export default function Ranking() {
 
   useEffect(() => {
     const fetchRanking = async () => {
-      const all = await db.participants.toArray();
-      const sorted = all.sort((a, b) => {
-        if (b.score !== a.score) return b.score - a.score;
-        return a.timeMs - b.timeMs; // Menor tempo
-      });
-      setTopPlayers(sorted.slice(0, 10)); // Top 10
+      try {
+        // 1. Pega do IndexedDB local (sempre rápido e garantido)
+        const local = await db.participants.toArray();
+        let remote: any[] = [];
+        
+        // 2. Se tiver internet, tenta puxar do Supabase
+        if (navigator.onLine) {
+          const { data, error } = await supabase
+            .from('participants')
+            .select('*')
+            .order('score', { ascending: false })
+            .order('timeMs', { ascending: true })
+            .limit(50);
+            
+          if (!error && data) {
+            remote = data;
+          }
+        }
+
+        // 3. Funde os dois (para garantir que alguém que acabou de jogar offline apareça + dados do outro totem)
+        const map = new Map();
+        
+        // Coloca os remotos no map (chave = cpf)
+        remote.forEach(p => map.set(p.cpf, p));
+        
+        // Coloca/Atualiza os locais (se for mais recente ou se não estiver no remoto)
+        local.forEach(p => {
+          if (!map.has(p.cpf) || p.score > map.get(p.cpf).score) {
+             map.set(p.cpf, p);
+          }
+        });
+
+        // 4. Converte devolta pra array e ordena
+        const all = Array.from(map.values());
+        const sorted = all.sort((a, b) => {
+          if (b.score !== a.score) return b.score - a.score;
+          return a.timeMs - b.timeMs; // Menor tempo
+        });
+        
+        setTopPlayers(sorted.slice(0, 10)); // Top 10
+      } catch (err) {
+        console.error("Erro ao montar ranking", err);
+      }
     };
 
     fetchRanking();

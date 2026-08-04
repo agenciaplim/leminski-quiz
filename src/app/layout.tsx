@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import SyncEngine from "@/components/SyncEngine";
 
 export const metadata: Metadata = {
   title: "Quiz | Festival Paulo Leminski",
@@ -22,6 +23,7 @@ export default function RootLayout({
         suppressHydrationWarning
         className={`font-sans antialiased bg-leminski-red text-leminski-light h-screen w-screen overflow-hidden flex flex-col`}
       >
+        <SyncEngine />
         <div className="relative flex-1 w-full h-full mx-auto bg-leminski-red flex flex-col">
           <main className="relative z-10 w-full h-full flex flex-col no-scrollbar overflow-y-auto">
             {children}

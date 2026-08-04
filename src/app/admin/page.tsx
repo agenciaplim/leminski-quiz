@@ -9,6 +9,7 @@ export default function AdminPanel() {
   const [participants, setParticipants] = useState<Participant[]>([]);
   const [search, setSearch] = useState("");
   const [rankingClosed, setRankingClosed] = useState(false);
+  const [unsyncedCount, setUnsyncedCount] = useState(0);
 
   useEffect(() => {
     fetchData();
@@ -19,6 +20,7 @@ export default function AdminPanel() {
     // Sort by playedAt DESC by default
     all.sort((a, b) => b.playedAt - a.playedAt);
     setParticipants(all);
+    setUnsyncedCount(all.filter(p => !p.synced).length);
   };
 
   const handleExport = () => {
@@ -70,7 +72,11 @@ export default function AdminPanel() {
             
             <div className="flex flex-col bg-white border-2 border-leminski-blue p-3 md:p-4 rounded-xl shadow-[2px_2px_0px_#192B4D]">
               <span className="text-sm font-bold text-leminski-blue/70 mb-1 uppercase">Sincronização</span>
-              <span className="text-yellow-600 font-black text-lg">OFFLINE (Mock)</span>
+              {unsyncedCount === 0 ? (
+                <span className="text-green-600 font-black text-lg">SINCRONIZADO (0 na fila)</span>
+              ) : (
+                <span className="text-yellow-600 font-black text-lg animate-pulse">PENDENTE ({unsyncedCount} na fila)</span>
+              )}
             </div>
             
             <div className="flex flex-col bg-white border-2 border-leminski-blue p-3 md:p-4 rounded-xl shadow-[2px_2px_0px_#192B4D]">
