@@ -103,6 +103,7 @@ export default function Quiz() {
         await db.participants.update(participant.id, {
           score: finalScore,
           timeMs,
+          synced: false, // Agora sim a partida está pronta para ir pra nuvem
         });
       }
     }

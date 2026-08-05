@@ -59,7 +59,7 @@ export default function Cadastro() {
         score: 0,
         timeMs: 0,
         playedAt: Date.now(),
-        synced: false,
+        synced: true, // Ignorado pelo motor até terminar o quiz
       });
 
       sessionStorage.setItem("quiz_cpf", finalCpf);
