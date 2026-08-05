@@ -26,7 +26,7 @@ export default function Ranking() {
         if (navigator.onLine) {
           const { data, error } = await supabase
             .from('participants')
-            .select('id, "displayName", score, "timeMs"')
+            .select('id, displayName, score, timeMs')
             .order('score', { ascending: false })
             .order('timeMs', { ascending: true })
             .limit(50);
