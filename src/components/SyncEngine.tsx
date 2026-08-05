@@ -23,10 +23,23 @@ export default function SyncEngine() {
           return;
         }
 
-        // Prepare data for Supabase (remove local 'id' and 'synced')
+        // Prepare data for Supabase (only send exactly what the DB expects)
         const dataToInsert = unsynced.map(p => {
-          const { id, synced, ...rest } = p;
-          return rest;
+          return {
+            cpf: p.cpf,
+            fullName: p.fullName,
+            displayName: p.displayName,
+            whatsapp: p.whatsapp || "",
+            email: p.email || "",
+            city: p.city || "",
+            state: p.state || "",
+            termsAccepted: p.termsAccepted || false,
+            festivalAccepted: p.festivalAccepted || false,
+            sponsorAccepted: p.sponsorAccepted || false,
+            score: p.score,
+            timeMs: p.timeMs,
+            playedAt: p.playedAt,
+          };
         });
 
         // Insert into Supabase
