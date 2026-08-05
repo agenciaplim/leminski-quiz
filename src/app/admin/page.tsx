@@ -135,7 +135,10 @@ export default function AdminPanel() {
                   <th className="p-4 font-black text-white uppercase tracking-wider">Data/Hora</th>
                   <th className="p-4 font-black text-white uppercase tracking-wider">Nome</th>
                   <th className="p-4 font-black text-white uppercase tracking-wider">CPF</th>
-                  <th className="p-4 font-black text-white uppercase tracking-wider">Contato</th>
+                  <th className="p-4 font-black text-white uppercase tracking-wider">WhatsApp</th>
+                  <th className="p-4 font-black text-white uppercase tracking-wider">E-mail</th>
+                  <th className="p-4 font-black text-white uppercase tracking-wider">Cidade</th>
+                  <th className="p-4 font-black text-white uppercase tracking-wider">Estado</th>
                   <th className="p-4 font-black text-right text-white uppercase tracking-wider">Pontos</th>
                   <th className="p-4 font-black text-right text-white uppercase tracking-wider">Tempo (ms)</th>
                 </tr>
@@ -146,14 +149,17 @@ export default function AdminPanel() {
                     <td className="p-4 text-leminski-blue font-medium">{new Date(p.playedAt).toLocaleString('pt-BR')}</td>
                     <td className="p-4 font-bold text-leminski-blue">{p.fullName} <br/><span className="text-xs text-leminski-blue/60">{p.displayName}</span></td>
                     <td className="p-4 font-medium text-leminski-blue">{p.cpf}</td>
-                    <td className="p-4 font-medium text-leminski-blue">{p.contact}</td>
+                    <td className="p-4 font-medium text-leminski-blue">{p.whatsapp}</td>
+                    <td className="p-4 font-medium text-leminski-blue">{p.email}</td>
+                    <td className="p-4 font-medium text-leminski-blue">{p.city}</td>
+                    <td className="p-4 font-medium text-leminski-blue">{p.state}</td>
                     <td className="p-4 text-right font-black text-leminski-red">{p.score}</td>
                     <td className="p-4 text-right font-bold text-leminski-blue/70">{p.timeMs}</td>
                   </tr>
                 ))}
                 {filtered.length === 0 && (
                   <tr>
-                    <td colSpan={6} className="p-8 text-center text-leminski-blue/50 font-bold text-lg">
+                    <td colSpan={9} className="p-8 text-center text-leminski-blue/50 font-bold text-lg">
                       Nenhum registro encontrado.
                     </td>
                   </tr>

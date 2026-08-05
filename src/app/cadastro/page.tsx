@@ -14,8 +14,10 @@ export default function Cadastro() {
   const [formData, setFormData] = useState({
     fullName: "",
     cpf: "",
-    contact: "",
-    location: "",
+    whatsapp: "",
+    email: "",
+    city: "",
+    state: "",
     displayName: "",
     termsAccepted: false,
     festivalAccepted: false,
@@ -118,23 +120,46 @@ export default function Cadastro() {
           </div>
 
           <div>
-            <label className="block text-base md:text-xl font-bold mb-1 md:mb-2 text-leminski-blue">WhatsApp / E-mail</label>
+            <label className="block text-base md:text-xl font-bold mb-1 md:mb-2 text-leminski-blue">WhatsApp</label>
             <input 
-              type="text" 
+              type="tel" 
               className="w-full bg-white border-2 border-leminski-blue/30 rounded-xl md:rounded-2xl p-3 md:p-5 text-lg md:text-2xl text-leminski-blue focus:outline-none focus:border-leminski-red focus:ring-4 focus:ring-leminski-red/20 font-medium"
-              value={formData.contact}
-              onChange={e => setFormData({...formData, contact: e.target.value})}
+              value={formData.whatsapp}
+              onChange={e => setFormData({...formData, whatsapp: e.target.value})}
             />
           </div>
 
           <div>
-            <label className="block text-base md:text-xl font-bold mb-1 md:mb-2 text-leminski-blue">Cidade / Estado</label>
+            <label className="block text-base md:text-xl font-bold mb-1 md:mb-2 text-leminski-blue">E-mail</label>
             <input 
-              type="text" 
+              type="email" 
               className="w-full bg-white border-2 border-leminski-blue/30 rounded-xl md:rounded-2xl p-3 md:p-5 text-lg md:text-2xl text-leminski-blue focus:outline-none focus:border-leminski-red focus:ring-4 focus:ring-leminski-red/20 font-medium"
-              value={formData.location}
-              onChange={e => setFormData({...formData, location: e.target.value})}
+              value={formData.email}
+              onChange={e => setFormData({...formData, email: e.target.value})}
             />
+          </div>
+
+          <div className="flex space-x-4">
+            <div className="flex-[2]">
+              <label className="block text-base md:text-xl font-bold mb-1 md:mb-2 text-leminski-blue">Cidade</label>
+              <input 
+                type="text" 
+                className="w-full bg-white border-2 border-leminski-blue/30 rounded-xl md:rounded-2xl p-3 md:p-5 text-lg md:text-2xl text-leminski-blue focus:outline-none focus:border-leminski-red focus:ring-4 focus:ring-leminski-red/20 font-medium"
+                value={formData.city}
+                onChange={e => setFormData({...formData, city: e.target.value})}
+              />
+            </div>
+            <div className="flex-1">
+              <label className="block text-base md:text-xl font-bold mb-1 md:mb-2 text-leminski-blue">Estado</label>
+              <input 
+                type="text" 
+                placeholder="UF"
+                maxLength={2}
+                className="w-full bg-white border-2 border-leminski-blue/30 rounded-xl md:rounded-2xl p-3 md:p-5 text-lg md:text-2xl text-leminski-blue focus:outline-none focus:border-leminski-red focus:ring-4 focus:ring-leminski-red/20 font-medium uppercase"
+                value={formData.state}
+                onChange={e => setFormData({...formData, state: e.target.value.toUpperCase()})}
+              />
+            </div>
           </div>
 
           <div>

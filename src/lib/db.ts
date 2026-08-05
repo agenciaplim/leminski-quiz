@@ -4,8 +4,10 @@ export interface Participant {
   id?: number;
   cpf: string;
   fullName: string;
-  contact: string;
-  location: string;
+  whatsapp: string;
+  email: string;
+  city: string;
+  state: string;
   displayName: string;
   termsAccepted: boolean;
   festivalAccepted: boolean;
