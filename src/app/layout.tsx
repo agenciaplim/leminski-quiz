@@ -3,6 +3,7 @@ import "./globals.css";
 import SyncEngine from "@/components/SyncEngine";
 import { AudioProvider } from "@/contexts/AudioContext";
 import MuteButton from "@/components/MuteButton";
+import IdleTimeout from "@/components/IdleTimeout";
 
 export const metadata: Metadata = {
   title: "Quiz | Festival Paulo Leminski",
@@ -28,6 +29,7 @@ export default function RootLayout({
         <AudioProvider>
           <SyncEngine />
           <MuteButton />
+          <IdleTimeout />
           <div className="relative flex-1 w-full h-full mx-auto bg-leminski-red flex flex-col">
             <main className="relative z-10 w-full h-full flex flex-col no-scrollbar overflow-y-auto">
               {children}
