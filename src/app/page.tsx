@@ -47,9 +47,7 @@ export default function Home() {
           </div>
           <div className="text-right flex flex-col items-end">
             <p className="text-[10px] md:text-xs tracking-widest text-leminski-blue uppercase mb-1 md:mb-2 font-bold">Patrocínio</p>
-            {/* O logo de patrocínio entra aqui depois! */}
-            <img src="/logo-patrocinio.png" alt="Patrocínio" className="h-8 md:h-12 lg:h-16 object-contain hidden" />
-            <div className="h-8 md:h-12 lg:h-16 w-24 md:w-32 bg-white/20 rounded"></div>
+            <img src="/logo-patrocinio.png" alt="Patrocínio" className="h-8 md:h-12 lg:h-16 object-contain" />
           </div>
         </div>
       </div>
