@@ -13,8 +13,8 @@ export default function Home() {
       <div 
         className="fixed inset-0 z-0 opacity-15 pointer-events-none mix-blend-multiply" 
         style={{ 
-          backgroundImage: 'url(/fundo-quiz.png)',
-          backgroundSize: 'cover',
+          backgroundImage: 'url(/arte-leminski.png)',
+          backgroundSize: 'contain',
           backgroundPosition: 'top center',
           backgroundRepeat: 'no-repeat'
         }} 
@@ -60,7 +60,13 @@ export default function Home() {
       </div>
 
       {/* Patrocinadores (Bottom) */}
-      <div className="relative z-10 w-full mt-auto flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 opacity-90 bg-white/20 p-4 md:p-6 rounded-[2rem]">
+      <div className="relative z-10 w-full mt-auto flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 opacity-90 bg-white/20 p-4 md:p-6 rounded-[2rem] items-end">
+        {/* Rouanet */}
+        <div className="flex flex-col items-center">
+            <img src="/logo-rouanet.png" alt="Lei Rouanet" className="h-12 md:h-16 object-contain mix-blend-multiply" />
+        </div>
+        
+        {/* Patrocinadores */}
         <div className="flex flex-col items-center">
             <p className="text-xs md:text-sm tracking-widest text-leminski-blue uppercase mb-4 font-bold">Patrocínio</p>
             <div className="flex items-center gap-6 md:gap-8">
@@ -68,12 +74,11 @@ export default function Home() {
                 <img src="/logo-bb.png" alt="Itaipu" className="h-12 md:h-16 object-contain mix-blend-multiply" />
             </div>
         </div>
+
+        {/* MinC */}
         <div className="flex flex-col items-center">
             <p className="text-xs md:text-sm tracking-widest text-leminski-blue uppercase mb-4 font-bold">Incentivo Cultural</p>
-            <div className="flex items-center gap-6 md:gap-8">
-                <img src="/logo-rouanet.png" alt="Lei Rouanet" className="h-12 md:h-16 object-contain mix-blend-multiply" />
-                <img src="/logo-minc.png" alt="Ministério da Cultura" className="h-8 md:h-10 object-contain mix-blend-multiply" />
-            </div>
+            <img src="/logo-minc.png" alt="Ministério da Cultura" className="h-8 md:h-10 object-contain mix-blend-multiply" />
         </div>
       </div>
     </div>
