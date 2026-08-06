@@ -7,10 +7,21 @@ import { useAudio } from "@/contexts/AudioContext";
 export default function Home() {
   const { playSfx } = useAudio();
   return (
-    <div className="flex flex-col items-center justify-between w-full min-h-full p-4 md:p-10 text-center overflow-y-auto">
+    <div className="flex flex-col items-center w-full min-h-full p-4 md:p-10 text-center overflow-y-auto relative">
       
+      {/* Background Image da Home */}
+      <div 
+        className="fixed inset-0 z-0 opacity-15 pointer-events-none mix-blend-multiply" 
+        style={{ 
+          backgroundImage: 'url(/fundo-quiz.png)',
+          backgroundSize: 'contain',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }} 
+      />
+
       {/* Logos Area (Top) */}
-      <div className="w-full flex justify-between items-start px-2 md:px-10 pt-4 md:pt-8 opacity-90">
+      <div className="w-full relative z-10 flex justify-between items-start px-2 md:px-10 pt-4 md:pt-8 opacity-90">
         <div className="text-left flex flex-col items-start">
           <p className="text-xs md:text-sm tracking-widest text-leminski-blue uppercase mb-2 md:mb-3 font-bold">Realização</p>
           <img src="/logo-realizacao.png" alt="Realização - Festival Paulo Leminski" className="h-12 md:h-16 lg:h-20 object-contain" />
@@ -18,7 +29,7 @@ export default function Home() {
       </div>
 
       {/* Main Content (Center) */}
-      <div className="flex-1 flex flex-col items-center justify-center space-y-6 md:space-y-12 w-full my-8">
+      <div className="relative z-10 flex-1 flex flex-col items-center justify-center space-y-6 md:space-y-12 w-full my-8">
         <div className="space-y-2 md:space-y-4">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-widest text-leminski-blue uppercase drop-shadow-[2px_2px_0px_rgba(25,43,77,0.3)]">
             Festival
@@ -37,7 +48,7 @@ export default function Home() {
       </div>
 
       {/* Action Button */}
-      <div className="w-full pb-8 shrink-0">
+      <div className="relative z-10 w-full pb-8 shrink-0">
         <Link
           href="/cadastro"
           onClick={() => playSfx('select')}
@@ -49,7 +60,7 @@ export default function Home() {
       </div>
 
       {/* Patrocinadores (Bottom) */}
-      <div className="w-full mt-auto flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 opacity-90 bg-white/20 p-4 md:p-6 rounded-[2rem]">
+      <div className="relative z-10 w-full mt-auto flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 opacity-90 bg-white/20 p-4 md:p-6 rounded-[2rem]">
         <div className="flex flex-col items-center">
             <p className="text-xs md:text-sm tracking-widest text-leminski-blue uppercase mb-4 font-bold">Patrocínio</p>
             <div className="flex items-center gap-6 md:gap-8">
