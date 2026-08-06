@@ -7,20 +7,24 @@ import { useAudio } from "@/contexts/AudioContext";
 export default function Home() {
   const { playSfx } = useAudio();
   return (
-    <div className="flex flex-col items-center justify-between w-full min-h-full p-4 md:p-10 text-center overflow-y-auto">
+    <div 
+      className="flex flex-col items-center justify-between w-full min-h-full p-4 md:p-10 text-center overflow-y-auto relative"
+      style={{
+        backgroundImage: "url('/arte-leminski.png')",
+        backgroundSize: "contain",
+        backgroundPosition: "center top",
+        backgroundRepeat: "no-repeat",
+        backgroundColor: "#E34832" // Cor exata do CSS bg-leminski-red para mesclar bordas invisivelmente
+      }}
+    >
       
-      {/* Main Content (Center) */}
-      <div className="flex-1 flex flex-col items-center justify-center space-y-6 md:space-y-8 w-full my-4">
-        {/* Arte Principal */}
-        <div className="w-full max-w-2xl md:max-w-4xl px-4 flex justify-center">
-          <img 
-            src="/arte-leminski.png" 
-            alt="Festival Paulo Leminski" 
-            className="w-full h-auto object-contain drop-shadow-[4px_4px_0px_#192B4D]"
-          />
-        </div>
+      {/* Overlay escuro sutil para garantir legibilidade, se necessário */}
+      <div className="absolute inset-0 bg-black/10 z-0"></div>
 
-        <div className="glass-panel p-6 md:p-8 rounded-2xl md:rounded-3xl w-full max-w-sm md:max-w-lg mt-2 md:mt-4">
+      {/* Main Content (Center) */}
+      <div className="relative z-10 flex-1 flex flex-col items-center justify-end md:justify-center space-y-6 md:space-y-8 w-full my-4 mt-[30vh] md:mt-48">
+        
+        <div className="glass-panel p-6 md:p-8 rounded-2xl md:rounded-3xl w-full max-w-sm md:max-w-lg mt-auto">
           <h3 className="text-xl md:text-2xl lg:text-3xl font-black mb-2 md:mb-4 uppercase tracking-wider text-leminski-blue">Quiz Interativo</h3>
           <p className="text-base md:text-lg lg:text-xl font-medium leading-relaxed opacity-90">
             Teste seus conhecimentos sobre o poeta e o festival e concorra a prêmios exclusivos!
@@ -29,7 +33,7 @@ export default function Home() {
       </div>
 
       {/* Action Button (Bottom) */}
-      <div className="w-full flex flex-col items-center shrink-0 space-y-8 pb-4 md:pb-8">
+      <div className="relative z-10 w-full flex flex-col items-center shrink-0 space-y-8 pb-4 md:pb-8">
         <Link
           href="/cadastro"
           onClick={() => playSfx('select')}
