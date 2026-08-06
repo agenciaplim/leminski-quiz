@@ -53,15 +53,15 @@ export default function Home() {
         <div className="flex flex-col items-center">
             <p className="text-xs md:text-sm tracking-widest text-leminski-blue uppercase mb-4 font-bold">Patrocínio</p>
             <div className="flex items-center gap-6 md:gap-8">
-                <img src="/cartoes_bb-1.png" alt="Ourocard" className="h-8 md:h-12 object-contain mix-blend-multiply" />
-                <img src="/image__3_-removebg-preview (1).png" alt="Banco do Brasil" className="h-10 md:h-14 object-contain mix-blend-multiply" />
+                <img src="/logo-ourocard.png" alt="Ourocard" className="h-8 md:h-12 object-contain mix-blend-multiply" />
+                <img src="/logo-bb.png" alt="Banco do Brasil" className="h-10 md:h-14 object-contain mix-blend-multiply" />
             </div>
         </div>
         <div className="flex flex-col items-center">
             <p className="text-xs md:text-sm tracking-widest text-leminski-blue uppercase mb-4 font-bold">Incentivo Cultural</p>
             <div className="flex items-center gap-6 md:gap-8">
-                <img src="/rouanet.png" alt="Lei Rouanet" className="h-12 md:h-16 object-contain mix-blend-multiply" />
-                <img src="/minccorhoriz-1024x206.png" alt="Ministério da Cultura" className="h-12 md:h-16 object-contain mix-blend-multiply" />
+                <img src="/logo-rouanet.png" alt="Lei Rouanet" className="h-12 md:h-16 object-contain mix-blend-multiply" />
+                <img src="/logo-minc.png" alt="Ministério da Cultura" className="h-12 md:h-16 object-contain mix-blend-multiply" />
             </div>
         </div>
       </div>
