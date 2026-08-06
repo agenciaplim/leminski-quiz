@@ -30,6 +30,18 @@ export default function Cadastro() {
     setError("");
 
     try {
+      if (!formData.fullName || !formData.cpf || !formData.whatsapp || !formData.email || !formData.city || !formData.state) {
+        setError("Por favor, preencha todos os campos obrigatórios.");
+        setLoading(false);
+        return;
+      }
+
+      if (!formData.termsAccepted) {
+        setError("Você precisa aceitar os Termos de Participação para continuar.");
+        setLoading(false);
+        return;
+      }
+
       const existing = await db.participants.where("cpf").equals(formData.cpf).first();
       
       if (existing) {
