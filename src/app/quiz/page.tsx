@@ -164,16 +164,6 @@ export default function Quiz() {
 
   return (
     <div className="flex flex-col w-full min-h-full p-4 md:p-10 overflow-y-auto relative">
-      {/* Imagem de fundo pouco visível */}
-      <div 
-        className="fixed inset-0 z-0 opacity-15 pointer-events-none" 
-        style={{ 
-          backgroundImage: 'url(/fundo-quiz.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center'
-        }} 
-      />
-
       <header className="relative z-10 flex flex-col md:flex-row items-center justify-between mb-6 md:mb-12 space-y-4 md:space-y-0">
         <div className="flex space-x-2 md:space-x-4">
           <div className="glass-panel px-4 py-2 md:px-6 md:py-3 rounded-full text-sm md:text-2xl font-bold text-leminski-blue whitespace-nowrap">

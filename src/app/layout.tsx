@@ -32,6 +32,16 @@ export default function RootLayout({
           <MuteButton />
           <IdleTimeout />
           <div className="relative flex-1 w-full h-full mx-auto bg-leminski-red flex flex-col">
+            {/* Global Background Image */}
+            <div 
+              className="fixed inset-0 z-0 opacity-15 pointer-events-none mix-blend-multiply" 
+              style={{ 
+                backgroundImage: 'url(/fundo-quiz.png)',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat'
+              }} 
+            />
             <main className="relative z-10 w-full h-full flex flex-col no-scrollbar overflow-y-auto">
               {children}
             </main>
