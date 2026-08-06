@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { db, Participant } from "@/lib/db";
-import { Download, Search, Settings, ShieldAlert, Trash2 } from "lucide-react";
+import { Download, Search, Settings, ShieldAlert, Trash2, RefreshCw } from "lucide-react";
 import Link from "next/link";
 
 import { supabase } from "@/lib/supabase";
@@ -220,9 +220,21 @@ export default function AdminPanel() {
           </div>
 
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 space-y-4 md:space-y-0">
-            <h2 className="text-xl md:text-2xl font-black uppercase text-leminski-blue">
-              {viewMode === 'local' ? 'Registros Locais' : 'Registros Globais'}
-            </h2>
+            <div className="flex items-center space-x-3">
+              <h2 className="text-xl md:text-2xl font-black uppercase text-leminski-blue">
+                {viewMode === 'local' ? 'Registros Locais' : 'Registros Globais'}
+              </h2>
+              {viewMode === 'global' && (
+                <button 
+                  onClick={fetchGlobalData}
+                  disabled={isLoadingGlobal}
+                  className="p-2 bg-leminski-blue text-white rounded-full hover:bg-leminski-blue/80 transition-all disabled:opacity-50"
+                  title="Atualizar dados da nuvem"
+                >
+                  <RefreshCw className={`w-5 h-5 ${isLoadingGlobal ? 'animate-spin' : ''}`} />
+                </button>
+              )}
+            </div>
             <div className="relative w-full md:w-80">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-leminski-blue/50 w-5 h-5" />
               <input 

@@ -38,8 +38,7 @@ export default function SyncEngine() {
             sponsorAccepted: p.sponsorAccepted || false,
             score: p.score,
             timeMs: p.timeMs,
-            playedAt: p.playedAt,
-            status: p.status
+            playedAt: p.playedAt
           };
 
           // Verifica se o lead já existe na nuvem pelo CPF
