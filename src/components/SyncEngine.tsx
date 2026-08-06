@@ -15,8 +15,8 @@ export default function SyncEngine() {
       try {
         isSyncing = true;
         
-        // Find all unsynced participants
-        const unsynced = await db.participants.filter(p => p.synced === false).toArray();
+        // Find all unsynced participants that finished the quiz
+        const unsynced = await db.participants.filter(p => p.synced === false && p.status === 'concluido').toArray();
         
         if (unsynced.length === 0) {
           isSyncing = false;

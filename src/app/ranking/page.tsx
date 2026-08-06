@@ -32,18 +32,18 @@ export default function Ranking() {
             .limit(50);
             
           if (!error && data) {
-            // Pegar apenas os locais que ainda NÃO subiram pra nuvem
-            const localUnsynced = localAll.filter(p => !p.synced);
+            // Pegar apenas os locais que ainda NÃO subiram pra nuvem E que foram concluídos
+            const localUnsynced = localAll.filter(p => !p.synced && p.status === 'concluido');
             
             // Junta os da nuvem com os que estão na fila local
             finalData = [...data, ...localUnsynced];
           } else {
-            // Se falhar a requisição, usa o cache local inteiro
-            finalData = localAll;
+            // Se falhar a requisição, usa o cache local apenas dos concluídos
+            finalData = localAll.filter(p => p.status === 'concluido');
           }
         } else {
-          // Sem internet, usa o cache local inteiro
-          finalData = localAll;
+          // Sem internet, usa o cache local apenas dos concluídos
+          finalData = localAll.filter(p => p.status === 'concluido');
         }
 
         // 3. Ordena os dados finais
