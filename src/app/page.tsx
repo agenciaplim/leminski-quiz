@@ -9,31 +9,19 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-between w-full min-h-full p-4 md:p-10 text-center overflow-y-auto">
       
-      {/* Logos Area (Top) */}
-      <div className="w-full flex justify-between items-start px-2 md:px-10 pt-4 md:pt-8 opacity-90">
-        <div className="text-left flex flex-col items-start">
-          <p className="text-xs md:text-sm tracking-widest text-leminski-blue uppercase mb-2 md:mb-3 font-bold">Realização</p>
-          <img src="/logo-realizacao.png" alt="Realização - Festival Paulo Leminski" className="h-12 md:h-16 lg:h-20 object-contain" />
-        </div>
-        <div className="text-right flex flex-col items-end">
-          <p className="text-xs md:text-sm tracking-widest text-leminski-blue uppercase mb-2 md:mb-3 font-bold">Patrocínio</p>
-          <div className="h-12 md:h-16 lg:h-20 w-24 md:w-48 bg-white/20 rounded"></div>
-        </div>
-      </div>
-
       {/* Main Content (Center) */}
-      <div className="flex-1 flex flex-col items-center justify-center space-y-6 md:space-y-12 w-full my-8">
-        <div className="space-y-2 md:space-y-4">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-widest text-leminski-blue uppercase drop-shadow-[2px_2px_0px_rgba(25,43,77,0.3)]">
-            Festival
-          </h2>
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-leminski-light leading-tight drop-shadow-[4px_4px_0px_#192B4D]">
-            PAULO <br /> LEMINSKI
-          </h1>
+      <div className="flex-1 flex flex-col items-center justify-center space-y-6 md:space-y-8 w-full my-4">
+        {/* Arte Principal */}
+        <div className="w-full max-w-2xl md:max-w-4xl px-4 flex justify-center">
+          <img 
+            src="/arte-leminski.png" 
+            alt="Festival Paulo Leminski" 
+            className="w-full h-auto object-contain drop-shadow-[4px_4px_0px_#192B4D]"
+          />
         </div>
 
-        <div className="glass-panel p-6 md:p-8 rounded-2xl md:rounded-3xl w-full max-w-sm md:max-w-lg mt-6 md:mt-10">
-          <h3 className="text-xl md:text-2xl lg:text-3xl font-black mb-2 md:mb-4 uppercase tracking-wider">Quiz Interativo</h3>
+        <div className="glass-panel p-6 md:p-8 rounded-2xl md:rounded-3xl w-full max-w-sm md:max-w-lg mt-2 md:mt-4">
+          <h3 className="text-xl md:text-2xl lg:text-3xl font-black mb-2 md:mb-4 uppercase tracking-wider text-leminski-blue">Quiz Interativo</h3>
           <p className="text-base md:text-lg lg:text-xl font-medium leading-relaxed opacity-90">
             Teste seus conhecimentos sobre o poeta e o festival e concorra a prêmios exclusivos!
           </p>
@@ -41,7 +29,7 @@ export default function Home() {
       </div>
 
       {/* Action Button (Bottom) */}
-      <div className="w-full pb-8 md:pb-20 shrink-0">
+      <div className="w-full flex flex-col items-center shrink-0 space-y-8 pb-4 md:pb-8">
         <Link
           href="/cadastro"
           onClick={() => playSfx('select')}
@@ -50,6 +38,20 @@ export default function Home() {
           Tocar para Iniciar
           <ChevronRight className="ml-2 md:ml-4 w-6 h-6 md:w-10 md:h-10" />
         </Link>
+
+        {/* Logos Area (Rodapé) */}
+        <div className="w-full flex justify-between items-end px-4 md:px-12 pt-4 border-t-2 border-leminski-blue/20">
+          <div className="text-left flex flex-col items-start">
+            <p className="text-[10px] md:text-xs tracking-widest text-leminski-blue uppercase mb-1 md:mb-2 font-bold">Realização</p>
+            <img src="/logo-realizacao.png" alt="Realização" className="h-8 md:h-12 lg:h-16 object-contain" />
+          </div>
+          <div className="text-right flex flex-col items-end">
+            <p className="text-[10px] md:text-xs tracking-widest text-leminski-blue uppercase mb-1 md:mb-2 font-bold">Patrocínio</p>
+            {/* O logo de patrocínio entra aqui depois! */}
+            <img src="/logo-patrocinio.png" alt="Patrocínio" className="h-8 md:h-12 lg:h-16 object-contain hidden" />
+            <div className="h-8 md:h-12 lg:h-16 w-24 md:w-32 bg-white/20 rounded"></div>
+          </div>
+        </div>
       </div>
     </div>
   );
