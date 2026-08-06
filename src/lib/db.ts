@@ -16,6 +16,7 @@ export interface Participant {
   timeMs: number;
   playedAt: number;
   synced: boolean;
+  status?: 'iniciado' | 'concluido';
 }
 
 const db = new Dexie('LeminskiQuizDB') as Dexie & {
