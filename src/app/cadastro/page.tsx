@@ -3,11 +3,15 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { db } from "@/lib/db";
-import { ChevronLeft, ChevronRight, AlertCircle } from "lucide-react";
+import { ChevronLeft, ChevronRight, AlertCircle, X } from "lucide-react";
 import Link from "next/link";
+import { useAudio } from "@/contexts/AudioContext";
 
 export default function Cadastro() {
   const router = useRouter();
+  const { playSfx } = useAudio();
+  const [showRegulamento, setShowRegulamento] = useState(false);
+  const [showPolitica, setShowPolitica] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   
@@ -203,7 +207,9 @@ export default function Cadastro() {
               checked={formData.termsAccepted}
               onChange={e => setFormData({...formData, termsAccepted: e.target.checked})}
             />
-            <span className="text-sm md:text-xl text-leminski-blue font-medium group-hover:text-leminski-red transition-colors">Aceito participar do quiz e exibir meu nome/apelido e pontuação no ranking do evento.</span>
+            <span className="text-sm md:text-xl text-leminski-blue font-medium transition-colors">
+              Eu li e aceito o <button type="button" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setShowRegulamento(true); }} className="underline font-bold hover:text-leminski-red">Regulamento da ação</button> e a <button type="button" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setShowPolitica(true); }} className="underline font-bold hover:text-leminski-red">Política de Privacidade</button>.
+            </span>
           </label>
 
           <label className="flex items-start space-x-3 md:space-x-4 cursor-pointer group p-3 -m-3 hover:bg-leminski-blue/5 rounded-xl transition-colors">
@@ -236,6 +242,40 @@ export default function Cadastro() {
           {!loading && <ChevronRight className="ml-2 md:ml-4 w-6 h-6 md:w-10 md:h-10 shrink-0" />}
         </button>
       </form>
+
+      {/* Modal Regulamento */}
+      {showRegulamento && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-10 bg-leminski-red/90 backdrop-blur-sm">
+          <div className="glass-panel w-full max-w-4xl max-h-[90vh] flex flex-col rounded-3xl overflow-hidden relative">
+            <div className="flex justify-between items-center p-6 border-b border-white/10 shrink-0">
+              <h2 className="text-2xl md:text-3xl font-black text-leminski-blue uppercase">Regulamento da Ação</h2>
+              <button onClick={() => setShowRegulamento(false)} className="p-2 text-leminski-blue hover:text-leminski-red transition-colors">
+                <X className="w-8 h-8" />
+              </button>
+            </div>
+            <div className="p-6 md:p-10 overflow-y-auto prose prose-lg text-leminski-blue/90 grow">
+              <p>O texto do regulamento será inserido aqui em breve.</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Política de Privacidade */}
+      {showPolitica && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-10 bg-leminski-red/90 backdrop-blur-sm">
+          <div className="glass-panel w-full max-w-4xl max-h-[90vh] flex flex-col rounded-3xl overflow-hidden relative">
+            <div className="flex justify-between items-center p-6 border-b border-white/10 shrink-0">
+              <h2 className="text-2xl md:text-3xl font-black text-leminski-blue uppercase">Política de Privacidade</h2>
+              <button onClick={() => setShowPolitica(false)} className="p-2 text-leminski-blue hover:text-leminski-red transition-colors">
+                <X className="w-8 h-8" />
+              </button>
+            </div>
+            <div className="p-6 md:p-10 overflow-y-auto prose prose-lg text-leminski-blue/90 grow">
+              <p>O texto da política de privacidade será inserido aqui em breve.</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
