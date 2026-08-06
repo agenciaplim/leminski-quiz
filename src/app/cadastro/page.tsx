@@ -70,7 +70,7 @@ export default function Cadastro() {
         score: 0,
         timeMs: 0,
         playedAt: Date.now(),
-        synced: true, // Ignorado pelo motor até terminar o quiz
+        synced: false, // Agora sincroniza imediatamente assim que cadastra
         status: 'iniciado'
       });
 

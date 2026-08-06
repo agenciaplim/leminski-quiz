@@ -15,17 +15,17 @@ export default function SyncEngine() {
       try {
         isSyncing = true;
         
-        // Find all unsynced participants that finished the quiz
-        const unsynced = await db.participants.filter(p => p.synced === false && p.status === 'concluido').toArray();
+        // Encontra todos que não estão sincronizados (mesmo incompletos)
+        const unsynced = await db.participants.filter(p => p.synced === false).toArray();
         
         if (unsynced.length === 0) {
           isSyncing = false;
           return;
         }
 
-        // Prepare data for Supabase (only send exactly what the DB expects)
-        const dataToInsert = unsynced.map(p => {
-          return {
+        // Processa um por um para evitar duplicatas (update se já existir CPF, insert se não)
+        for (const p of unsynced) {
+          const payload = {
             cpf: p.cpf,
             fullName: p.fullName,
             displayName: p.displayName,
@@ -39,28 +39,42 @@ export default function SyncEngine() {
             score: p.score,
             timeMs: p.timeMs,
             playedAt: p.playedAt,
+            status: p.status
           };
-        });
 
-        // Insert into Supabase
-        const { error } = await supabase
-          .from('participants')
-          .insert(dataToInsert);
+          // Verifica se o lead já existe na nuvem pelo CPF
+          const { data: existingLead } = await supabase
+            .from('participants')
+            .select('id')
+            .eq('cpf', p.cpf)
+            .maybeSingle();
 
-        if (error) {
-          console.error("Erro ao sincronizar com o Supabase:", error);
-          isSyncing = false;
-          return;
-        }
+          let syncError = null;
 
-        // If success, mark as synced locally
-        for (const p of unsynced) {
-          if (p.id) {
+          if (existingLead?.id) {
+            // Atualiza o registro existente (ex: pessoa terminou o quiz e agora tem pontuação)
+            const { error } = await supabase
+              .from('participants')
+              .update(payload)
+              .eq('id', existingLead.id);
+            syncError = error;
+          } else {
+            // Cria um novo registro
+            const { error } = await supabase
+              .from('participants')
+              .insert([payload]);
+            syncError = error;
+          }
+
+          if (syncError) {
+            console.error(`Erro ao sincronizar CPF ${p.cpf}:`, syncError);
+          } else if (p.id) {
+            // Marca como sincronizado localmente se deu certo
             await db.participants.update(p.id, { synced: true });
           }
         }
         
-        console.log(`Sincronizados ${unsynced.length} registros com sucesso!`);
+        console.log(`Sincronização processou ${unsynced.length} registros.`);
       } catch (err) {
         console.error("Falha no SyncEngine:", err);
       } finally {
