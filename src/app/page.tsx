@@ -14,8 +14,8 @@ export default function Home() {
         className="fixed inset-0 z-0 opacity-15 pointer-events-none mix-blend-multiply" 
         style={{ 
           backgroundImage: 'url(/fundo-quiz.png)',
-          backgroundSize: 'contain',
-          backgroundPosition: 'center',
+          backgroundSize: 'cover',
+          backgroundPosition: 'top center',
           backgroundRepeat: 'no-repeat'
         }} 
       />
