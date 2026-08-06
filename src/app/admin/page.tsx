@@ -10,6 +10,9 @@ export default function AdminPanel() {
   const [search, setSearch] = useState("");
   const [rankingClosed, setRankingClosed] = useState(false);
   const [unsyncedCount, setUnsyncedCount] = useState(0);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [password, setPassword] = useState("");
+  const [authError, setAuthError] = useState("");
 
   useEffect(() => {
     fetchData();
@@ -40,10 +43,50 @@ export default function AdminPanel() {
     }
   };
 
+  const handleAuth = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password === "admin2026") {
+      setIsAuthenticated(true);
+    } else {
+      setAuthError("Senha incorreta.");
+    }
+  };
+
   const filtered = participants.filter(p => 
     p.cpf.includes(search) || 
-    p.fullName.toLowerCase().includes(search.toLowerCase())
+    p.fullName.toLowerCase().includes(search.toLowerCase()) ||
+    p.displayName.toLowerCase().includes(search.toLowerCase())
   );
+
+  if (!isAuthenticated) {
+    return (
+      <div className="flex flex-col items-center justify-center w-full min-h-full p-4 bg-leminski-peach">
+        <div className="glass-panel p-8 md:p-12 rounded-3xl w-full max-w-md text-center">
+          <ShieldAlert className="w-16 h-16 text-leminski-red mx-auto mb-6" />
+          <h2 className="text-2xl md:text-3xl font-black text-leminski-blue uppercase mb-2">Acesso Restrito</h2>
+          <p className="text-leminski-blue/70 font-medium mb-8">Digite a senha operacional para acessar o painel administrativo do totem.</p>
+          
+          <form onSubmit={handleAuth} className="space-y-4">
+            {authError && <p className="text-red-500 font-bold text-sm bg-red-100 p-2 rounded-xl">{authError}</p>}
+            <input 
+              type="password"
+              placeholder="Senha de acesso"
+              className="w-full bg-white border-2 border-leminski-blue/30 rounded-2xl p-4 text-xl text-leminski-blue focus:outline-none focus:border-leminski-red text-center"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+            />
+            <button type="submit" className="w-full py-4 bg-leminski-blue text-white rounded-full font-black uppercase tracking-widest hover:bg-leminski-blue/90 shadow-[4px_4px_0px_#192B4D] active:translate-y-1 active:shadow-none transition-all">
+              Acessar Painel
+            </button>
+          </form>
+          
+          <Link href="/" className="inline-block mt-8 text-sm font-bold text-leminski-blue/60 hover:text-leminski-blue">
+            &larr; Voltar ao Início
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col w-full min-h-full p-4 md:p-10 bg-leminski-peach overflow-y-auto">
@@ -120,7 +163,7 @@ export default function AdminPanel() {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-leminski-blue/50 w-5 h-5" />
               <input 
                 type="text" 
-                placeholder="Buscar CPF ou Nome..."
+                placeholder="Buscar CPF, Nome ou Apelido..."
                 value={search}
                 onChange={e => setSearch(e.target.value)}
                 className="bg-white border-2 border-leminski-blue rounded-full py-2 pl-10 pr-4 text-leminski-blue font-bold focus:outline-none focus:border-leminski-red focus:ring-4 focus:ring-leminski-red/20 w-full shadow-[2px_2px_0px_#192B4D]"
@@ -132,6 +175,7 @@ export default function AdminPanel() {
             <table className="w-full text-left text-sm whitespace-nowrap min-w-[700px]">
               <thead className="bg-leminski-blue border-b-4 border-leminski-blue">
                 <tr>
+                  <th className="p-4 font-black text-white uppercase tracking-wider">Status</th>
                   <th className="p-4 font-black text-white uppercase tracking-wider">Data/Hora</th>
                   <th className="p-4 font-black text-white uppercase tracking-wider">Nome</th>
                   <th className="p-4 font-black text-white uppercase tracking-wider">CPF</th>
@@ -146,6 +190,13 @@ export default function AdminPanel() {
               <tbody className="divide-y-2 divide-leminski-blue/20">
                 {filtered.map(p => (
                   <tr key={p.id} className="hover:bg-leminski-peach/30 transition">
+                    <td className="p-4">
+                      {p.status === 'iniciado' || (p.score === 0 && p.timeMs === 0) ? (
+                        <span className="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-bold rounded-full">Incompleto</span>
+                      ) : (
+                        <span className="px-2 py-1 bg-green-100 text-green-800 text-xs font-bold rounded-full">Concluído</span>
+                      )}
+                    </td>
                     <td className="p-4 text-leminski-blue font-medium">{new Date(p.playedAt).toLocaleString('pt-BR')}</td>
                     <td className="p-4 font-bold text-leminski-blue">{p.fullName} <br/><span className="text-xs text-leminski-blue/60">{p.displayName}</span></td>
                     <td className="p-4 font-medium text-leminski-blue">{p.cpf}</td>
@@ -159,7 +210,7 @@ export default function AdminPanel() {
                 ))}
                 {filtered.length === 0 && (
                   <tr>
-                    <td colSpan={9} className="p-8 text-center text-leminski-blue/50 font-bold text-lg">
+                    <td colSpan={10} className="p-8 text-center text-leminski-blue/50 font-bold text-lg">
                       Nenhum registro encontrado.
                     </td>
                   </tr>

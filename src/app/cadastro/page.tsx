@@ -30,14 +30,13 @@ export default function Cadastro() {
     setError("");
 
     try {
-      // REMOVIDO PARA TESTES
-      // const existing = await db.participants.where("cpf").equals(formData.cpf).first();
-      // 
-      // if (existing) {
-      //   setError("Você já participou deste quiz. Confira sua posição no ranking e boa sorte!");
-      //   setLoading(false);
-      //   return;
-      // }
+      const existing = await db.participants.where("cpf").equals(formData.cpf).first();
+      
+      if (existing) {
+        setError("Você já participou deste quiz. Confira sua posição no ranking e boa sorte!");
+        setLoading(false);
+        return;
+      }
 
       let finalCpf = formData.cpf.trim();
       if (!finalCpf) {
@@ -60,6 +59,7 @@ export default function Cadastro() {
         timeMs: 0,
         playedAt: Date.now(),
         synced: true, // Ignorado pelo motor até terminar o quiz
+        status: 'iniciado'
       });
 
       sessionStorage.setItem("quiz_cpf", finalCpf);
@@ -103,6 +103,7 @@ export default function Cadastro() {
             <label className="block text-base md:text-xl font-bold mb-1 md:mb-2 text-leminski-blue">Nome Completo</label>
             <input 
               type="text" 
+              required
               className="w-full bg-white border-2 border-leminski-blue/30 rounded-xl md:rounded-2xl p-3 md:p-5 text-lg md:text-2xl text-leminski-blue focus:outline-none focus:border-leminski-red focus:ring-4 focus:ring-leminski-red/20 font-medium"
               value={formData.fullName}
               onChange={e => setFormData({...formData, fullName: e.target.value})}
@@ -113,6 +114,7 @@ export default function Cadastro() {
             <label className="block text-base md:text-xl font-bold mb-1 md:mb-2 text-leminski-blue">CPF (Somente números)</label>
             <input 
               type="number" 
+              required
               className="w-full bg-white border-2 border-leminski-blue/30 rounded-xl md:rounded-2xl p-3 md:p-5 text-lg md:text-2xl text-leminski-blue focus:outline-none focus:border-leminski-red focus:ring-4 focus:ring-leminski-red/20 font-medium"
               value={formData.cpf}
               onChange={e => setFormData({...formData, cpf: e.target.value})}
@@ -123,6 +125,7 @@ export default function Cadastro() {
             <label className="block text-base md:text-xl font-bold mb-1 md:mb-2 text-leminski-blue">WhatsApp</label>
             <input 
               type="tel" 
+              required
               className="w-full bg-white border-2 border-leminski-blue/30 rounded-xl md:rounded-2xl p-3 md:p-5 text-lg md:text-2xl text-leminski-blue focus:outline-none focus:border-leminski-red focus:ring-4 focus:ring-leminski-red/20 font-medium"
               value={formData.whatsapp}
               onChange={e => setFormData({...formData, whatsapp: e.target.value})}
@@ -133,6 +136,7 @@ export default function Cadastro() {
             <label className="block text-base md:text-xl font-bold mb-1 md:mb-2 text-leminski-blue">E-mail</label>
             <input 
               type="email" 
+              required
               className="w-full bg-white border-2 border-leminski-blue/30 rounded-xl md:rounded-2xl p-3 md:p-5 text-lg md:text-2xl text-leminski-blue focus:outline-none focus:border-leminski-red focus:ring-4 focus:ring-leminski-red/20 font-medium"
               value={formData.email}
               onChange={e => setFormData({...formData, email: e.target.value})}
@@ -144,6 +148,7 @@ export default function Cadastro() {
               <label className="block text-base md:text-xl font-bold mb-1 md:mb-2 text-leminski-blue">Cidade</label>
               <input 
                 type="text" 
+                required
                 className="w-full bg-white border-2 border-leminski-blue/30 rounded-xl md:rounded-2xl p-3 md:p-5 text-lg md:text-2xl text-leminski-blue focus:outline-none focus:border-leminski-red focus:ring-4 focus:ring-leminski-red/20 font-medium"
                 value={formData.city}
                 onChange={e => setFormData({...formData, city: e.target.value})}
@@ -154,6 +159,7 @@ export default function Cadastro() {
               <input 
                 type="text" 
                 placeholder="UF"
+                required
                 maxLength={2}
                 className="w-full bg-white border-2 border-leminski-blue/30 rounded-xl md:rounded-2xl p-3 md:p-5 text-lg md:text-2xl text-leminski-blue focus:outline-none focus:border-leminski-red focus:ring-4 focus:ring-leminski-red/20 font-medium uppercase"
                 value={formData.state}
@@ -177,9 +183,10 @@ export default function Cadastro() {
         <div className="glass-panel p-4 md:p-8 rounded-2xl md:rounded-3xl space-y-4 md:space-y-6">
           <h3 className="text-xl md:text-2xl font-black text-leminski-red mb-2 md:mb-4">Termos de Participação</h3>
           
-          <label className="flex items-start space-x-3 md:space-x-4 cursor-pointer group">
+          <label className="flex items-start space-x-3 md:space-x-4 cursor-pointer group p-3 -m-3 hover:bg-leminski-blue/5 rounded-xl transition-colors">
             <input 
               type="checkbox" 
+              required
               className="w-6 h-6 md:w-8 md:h-8 mt-1 rounded border-2 border-leminski-blue text-leminski-red focus:ring-leminski-red shrink-0"
               checked={formData.termsAccepted}
               onChange={e => setFormData({...formData, termsAccepted: e.target.checked})}
@@ -187,7 +194,7 @@ export default function Cadastro() {
             <span className="text-sm md:text-xl text-leminski-blue font-medium group-hover:text-leminski-red transition-colors">Aceito participar do quiz e exibir meu nome/apelido e pontuação no ranking do evento.</span>
           </label>
 
-          <label className="flex items-start space-x-3 md:space-x-4 cursor-pointer group">
+          <label className="flex items-start space-x-3 md:space-x-4 cursor-pointer group p-3 -m-3 hover:bg-leminski-blue/5 rounded-xl transition-colors">
             <input 
               type="checkbox" 
               className="w-6 h-6 md:w-8 md:h-8 mt-1 rounded border-2 border-leminski-blue text-leminski-red focus:ring-leminski-red shrink-0"
@@ -197,7 +204,7 @@ export default function Cadastro() {
             <span className="text-sm md:text-xl text-leminski-blue font-medium group-hover:text-leminski-red transition-colors">Autorizo o Festival Paulo Leminski a utilizar minhas informações para comunicações futuras.</span>
           </label>
 
-          <label className="flex items-start space-x-3 md:space-x-4 cursor-pointer group">
+          <label className="flex items-start space-x-3 md:space-x-4 cursor-pointer group p-3 -m-3 hover:bg-leminski-blue/5 rounded-xl transition-colors">
             <input 
               type="checkbox" 
               className="w-6 h-6 md:w-8 md:h-8 mt-1 rounded border-2 border-leminski-blue text-leminski-red focus:ring-leminski-red shrink-0"

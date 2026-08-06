@@ -104,6 +104,7 @@ export default function Quiz() {
           score: finalScore,
           timeMs,
           synced: false, // Agora sim a partida está pronta para ir pra nuvem
+          status: 'concluido'
         });
       }
     }
@@ -185,6 +186,24 @@ export default function Quiz() {
         <h2 className="text-2xl md:text-4xl lg:text-5xl font-black leading-tight text-center text-leminski-light drop-shadow-[4px_4px_0px_#192B4D]">
           {currentQuestion.text}
         </h2>
+
+        {showFeedback && selectedOption && (
+          <div className={`text-center py-3 md:py-4 rounded-2xl font-black text-xl md:text-3xl animate-in zoom-in duration-200 shadow-[4px_4px_0px_#192B4D] ${
+            currentQuestion.options.find(o => o.id === selectedOption)?.isCorrect 
+              ? 'bg-green-500 text-white border-4 border-leminski-blue' 
+              : 'bg-red-500 text-white border-4 border-leminski-blue'
+          }`}>
+            {currentQuestion.options.find(o => o.id === selectedOption)?.isCorrect 
+              ? '✅ RESPOSTA CORRETA!' 
+              : '❌ RESPOSTA INCORRETA!'}
+          </div>
+        )}
+
+        {showFeedback && !selectedOption && (
+          <div className="text-center py-3 md:py-4 rounded-2xl font-black text-xl md:text-3xl animate-in zoom-in duration-200 shadow-[4px_4px_0px_#192B4D] bg-yellow-500 text-white border-4 border-leminski-blue">
+            ⏱️ TEMPO ESGOTADO!
+          </div>
+        )}
 
         <div className="flex flex-col space-y-3 md:space-y-6 w-full">
           {currentQuestion.options.map((opt) => {
