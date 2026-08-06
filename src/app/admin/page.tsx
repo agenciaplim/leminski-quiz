@@ -38,13 +38,16 @@ export default function AdminPanel() {
       const { data, error } = await supabase
         .from('participants')
         .select('*')
-        .order('played_at', { ascending: false });
+        .order('playedAt', { ascending: false });
       
-      if (error) throw error;
+      if (error) {
+        console.error("Erro detalhado do Supabase:", error);
+        throw error;
+      }
       setGlobalParticipants(data || []);
     } catch (err) {
       console.error("Erro ao buscar dados globais", err);
-      alert("Erro ao conectar com a nuvem.");
+      alert("Erro ao conectar com a nuvem. Verifique o console.");
     } finally {
       setIsLoadingGlobal(false);
     }
