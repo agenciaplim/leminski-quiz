@@ -34,6 +34,7 @@ export default function AdminPanel() {
 
   const fetchGlobalData = async () => {
     setIsLoadingGlobal(true);
+    fetchData(); // Atualiza os dados locais e contadores do menu lateral
     try {
       const { data, error } = await supabase
         .from('participants')
