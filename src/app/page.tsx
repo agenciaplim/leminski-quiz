@@ -15,10 +15,6 @@ export default function Home() {
           <p className="text-xs md:text-sm tracking-widest text-leminski-blue uppercase mb-2 md:mb-3 font-bold">Realização</p>
           <img src="/logo-realizacao.png" alt="Realização - Festival Paulo Leminski" className="h-12 md:h-16 lg:h-20 object-contain" />
         </div>
-        <div className="text-right flex flex-col items-end">
-          <p className="text-xs md:text-sm tracking-widest text-leminski-blue uppercase mb-2 md:mb-3 font-bold">Patrocínio</p>
-          <div className="h-12 md:h-16 lg:h-20 w-24 md:w-48 bg-white/20 rounded"></div>
-        </div>
       </div>
 
       {/* Main Content (Center) */}
@@ -40,8 +36,8 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Action Button (Bottom) */}
-      <div className="w-full pb-8 md:pb-20 shrink-0">
+      {/* Action Button */}
+      <div className="w-full pb-8 shrink-0">
         <Link
           href="/cadastro"
           onClick={() => playSfx('select')}
@@ -50,6 +46,24 @@ export default function Home() {
           Tocar para Iniciar
           <ChevronRight className="ml-2 md:ml-4 w-6 h-6 md:w-10 md:h-10" />
         </Link>
+      </div>
+
+      {/* Patrocinadores (Bottom) */}
+      <div className="w-full mt-auto flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 opacity-90 bg-white/20 p-4 md:p-6 rounded-[2rem]">
+        <div className="flex flex-col items-center">
+            <p className="text-xs md:text-sm tracking-widest text-leminski-blue uppercase mb-4 font-bold">Patrocínio</p>
+            <div className="flex items-center gap-6 md:gap-8">
+                <img src="/cartoes_bb-1.png" alt="Ourocard" className="h-8 md:h-12 object-contain mix-blend-multiply" />
+                <img src="/image__3_-removebg-preview (1).png" alt="Banco do Brasil" className="h-10 md:h-14 object-contain mix-blend-multiply" />
+            </div>
+        </div>
+        <div className="flex flex-col items-center">
+            <p className="text-xs md:text-sm tracking-widest text-leminski-blue uppercase mb-4 font-bold">Incentivo Cultural</p>
+            <div className="flex items-center gap-6 md:gap-8">
+                <img src="/rouanet.png" alt="Lei Rouanet" className="h-12 md:h-16 object-contain mix-blend-multiply" />
+                <img src="/minccorhoriz-1024x206.png" alt="Ministério da Cultura" className="h-12 md:h-16 object-contain mix-blend-multiply" />
+            </div>
+        </div>
       </div>
     </div>
   );
