@@ -5,8 +5,14 @@ import { db, Participant } from "@/lib/db";
 import { Download, Search, Settings, ShieldAlert, Trash2 } from "lucide-react";
 import Link from "next/link";
 
+import { supabase } from "@/lib/supabase";
+
 export default function AdminPanel() {
   const [participants, setParticipants] = useState<Participant[]>([]);
+  const [globalParticipants, setGlobalParticipants] = useState<any[]>([]);
+  const [viewMode, setViewMode] = useState<'local' | 'global'>('local');
+  const [isLoadingGlobal, setIsLoadingGlobal] = useState(false);
+  
   const [search, setSearch] = useState("");
   const [rankingClosed, setRankingClosed] = useState(false);
   const [unsyncedCount, setUnsyncedCount] = useState(0);
@@ -26,17 +32,47 @@ export default function AdminPanel() {
     setUnsyncedCount(all.filter(p => !p.synced).length);
   };
 
+  const fetchGlobalData = async () => {
+    setIsLoadingGlobal(true);
+    try {
+      const { data, error } = await supabase
+        .from('participants')
+        .select('*')
+        .order('played_at', { ascending: false });
+      
+      if (error) throw error;
+      setGlobalParticipants(data || []);
+    } catch (err) {
+      console.error("Erro ao buscar dados globais", err);
+      alert("Erro ao conectar com a nuvem.");
+    } finally {
+      setIsLoadingGlobal(false);
+    }
+  };
+
+  useEffect(() => {
+    if (viewMode === 'global' && globalParticipants.length === 0) {
+      fetchGlobalData();
+    }
+  }, [viewMode]);
+
   const handleExport = () => {
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(participants, null, 2));
+    const dataToExport = viewMode === 'local' ? participants : globalParticipants;
+    const prefix = viewMode === 'local' ? 'local' : 'global';
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dataToExport, null, 2));
     const downloadAnchorNode = document.createElement('a');
     downloadAnchorNode.setAttribute("href", dataStr);
-    downloadAnchorNode.setAttribute("download", "leminski_quiz_export.json");
+    downloadAnchorNode.setAttribute("download", `leminski_quiz_export_${prefix}.json`);
     document.body.appendChild(downloadAnchorNode);
     downloadAnchorNode.click();
     downloadAnchorNode.remove();
   };
 
   const handleClear = async () => {
+    if (viewMode === 'global') {
+      alert("Não é possível apagar os dados da nuvem por aqui.");
+      return;
+    }
     if (confirm("Tem certeza que deseja APAGAR TODOS os dados locais? Esta ação não pode ser desfeita.")) {
       await db.participants.clear();
       fetchData();
@@ -52,11 +88,16 @@ export default function AdminPanel() {
     }
   };
 
-  const filtered = participants.filter(p => 
-    p.cpf.includes(search) || 
-    p.fullName.toLowerCase().includes(search.toLowerCase()) ||
-    p.displayName.toLowerCase().includes(search.toLowerCase())
-  );
+  const activeParticipants = viewMode === 'local' ? participants : globalParticipants;
+  const filtered = activeParticipants.filter(p => {
+    const cpf = p.cpf || '';
+    const fullName = p.fullName || p.full_name || '';
+    const displayName = p.displayName || p.display_name || '';
+    
+    return cpf.includes(search) || 
+      fullName.toLowerCase().includes(search.toLowerCase()) ||
+      displayName.toLowerCase().includes(search.toLowerCase());
+  });
 
   if (!isAuthenticated) {
     return (
@@ -123,7 +164,7 @@ export default function AdminPanel() {
             </div>
             
             <div className="flex flex-col bg-white border-2 border-leminski-blue p-3 md:p-4 rounded-xl shadow-[2px_2px_0px_#192B4D]">
-              <span className="text-sm font-bold text-leminski-blue/70 mb-1 uppercase">Total Registros</span>
+              <span className="text-sm font-bold text-leminski-blue/70 mb-1 uppercase">Total Registros (Local)</span>
               <span className="font-black text-2xl md:text-3xl text-leminski-blue">{participants.length}</span>
             </div>
           </div>
@@ -135,7 +176,7 @@ export default function AdminPanel() {
               onClick={handleExport}
               className="w-full py-3 md:py-4 bg-leminski-blue text-white border-2 border-leminski-blue rounded-xl font-bold flex flex-col items-center justify-center transition text-sm md:text-base shadow-[4px_4px_0px_#192B4D] active:translate-y-1 active:shadow-none hover:bg-leminski-blue/90"
             >
-              <Download className="w-5 h-5 mb-1" /> Exportar JSON
+              <Download className="w-5 h-5 mb-1" /> Exportar JSON ({viewMode === 'local' ? 'Local' : 'Global'})
             </button>
 
             <button 
@@ -146,19 +187,39 @@ export default function AdminPanel() {
               {rankingClosed ? "Abrir Ranking" : "Encerrar Ranking"}
             </button>
 
-            <button 
-              onClick={handleClear}
-              className="w-full py-3 md:py-4 bg-white text-red-600 border-2 border-red-600 hover:bg-red-50 rounded-xl font-bold flex flex-col items-center justify-center transition mt-4 text-sm md:text-base shadow-[4px_4px_0px_#EF4444] active:translate-y-1 active:shadow-none"
-            >
-              <Trash2 className="w-5 h-5 mb-1" /> Limpar Banco
-            </button>
+            {viewMode === 'local' && (
+              <button 
+                onClick={handleClear}
+                className="w-full py-3 md:py-4 bg-white text-red-600 border-2 border-red-600 hover:bg-red-50 rounded-xl font-bold flex flex-col items-center justify-center transition mt-4 text-sm md:text-base shadow-[4px_4px_0px_#EF4444] active:translate-y-1 active:shadow-none"
+              >
+                <Trash2 className="w-5 h-5 mb-1" /> Limpar Banco Local
+              </button>
+            )}
           </div>
         </div>
 
         {/* Main Content Area - Table */}
         <div className="lg:col-span-3 glass-panel p-4 md:p-6 rounded-2xl flex flex-col min-h-[500px]">
+          
+          <div className="flex gap-4 mb-6 border-b-2 border-leminski-blue/20 pb-4">
+            <button 
+              onClick={() => setViewMode('local')}
+              className={`px-6 py-2 rounded-full font-bold transition-all ${viewMode === 'local' ? 'bg-leminski-blue text-white shadow-[2px_2px_0px_#192B4D]' : 'bg-white text-leminski-blue/60 hover:bg-white/80'}`}
+            >
+              Participantes Locais (Este Totem)
+            </button>
+            <button 
+              onClick={() => setViewMode('global')}
+              className={`px-6 py-2 rounded-full font-bold transition-all ${viewMode === 'global' ? 'bg-leminski-blue text-white shadow-[2px_2px_0px_#192B4D]' : 'bg-white text-leminski-blue/60 hover:bg-white/80'}`}
+            >
+              Todos (Nuvem)
+            </button>
+          </div>
+
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 space-y-4 md:space-y-0">
-            <h2 className="text-xl md:text-2xl font-black uppercase text-leminski-blue">Participantes Locais</h2>
+            <h2 className="text-xl md:text-2xl font-black uppercase text-leminski-blue">
+              {viewMode === 'local' ? 'Registros Locais' : 'Registros Globais'}
+            </h2>
             <div className="relative w-full md:w-80">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-leminski-blue/50 w-5 h-5" />
               <input 
@@ -171,53 +232,68 @@ export default function AdminPanel() {
             </div>
           </div>
 
-          <div className="flex-1 overflow-x-auto rounded-xl border-4 border-leminski-blue bg-white shadow-[4px_4px_0px_#192B4D]">
-            <table className="w-full text-left text-sm whitespace-nowrap min-w-[700px]">
-              <thead className="bg-leminski-blue border-b-4 border-leminski-blue">
-                <tr>
-                  <th className="p-4 font-black text-white uppercase tracking-wider">Status</th>
-                  <th className="p-4 font-black text-white uppercase tracking-wider">Data/Hora</th>
-                  <th className="p-4 font-black text-white uppercase tracking-wider">Nome</th>
-                  <th className="p-4 font-black text-white uppercase tracking-wider">CPF</th>
-                  <th className="p-4 font-black text-white uppercase tracking-wider">WhatsApp</th>
-                  <th className="p-4 font-black text-white uppercase tracking-wider">E-mail</th>
-                  <th className="p-4 font-black text-white uppercase tracking-wider">Cidade</th>
-                  <th className="p-4 font-black text-white uppercase tracking-wider">Estado</th>
-                  <th className="p-4 font-black text-right text-white uppercase tracking-wider">Pontos</th>
-                  <th className="p-4 font-black text-right text-white uppercase tracking-wider">Tempo (ms)</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y-2 divide-leminski-blue/20">
-                {filtered.map(p => (
-                  <tr key={p.id} className="hover:bg-leminski-peach/30 transition">
-                    <td className="p-4">
-                      {p.status === 'iniciado' || (p.score === 0 && p.timeMs === 0) ? (
-                        <span className="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-bold rounded-full">Incompleto</span>
-                      ) : (
-                        <span className="px-2 py-1 bg-green-100 text-green-800 text-xs font-bold rounded-full">Concluído</span>
-                      )}
-                    </td>
-                    <td className="p-4 text-leminski-blue font-medium">{new Date(p.playedAt).toLocaleString('pt-BR')}</td>
-                    <td className="p-4 font-bold text-leminski-blue">{p.fullName} <br/><span className="text-xs text-leminski-blue/60">{p.displayName}</span></td>
-                    <td className="p-4 font-medium text-leminski-blue">{p.cpf}</td>
-                    <td className="p-4 font-medium text-leminski-blue">{p.whatsapp}</td>
-                    <td className="p-4 font-medium text-leminski-blue">{p.email}</td>
-                    <td className="p-4 font-medium text-leminski-blue">{p.city}</td>
-                    <td className="p-4 font-medium text-leminski-blue">{p.state}</td>
-                    <td className="p-4 text-right font-black text-leminski-red">{p.score}</td>
-                    <td className="p-4 text-right font-bold text-leminski-blue/70">{p.timeMs}</td>
-                  </tr>
-                ))}
-                {filtered.length === 0 && (
+          {viewMode === 'global' && isLoadingGlobal ? (
+            <div className="flex-1 flex items-center justify-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-leminski-blue"></div>
+            </div>
+          ) : (
+            <div className="flex-1 overflow-x-auto rounded-xl border-4 border-leminski-blue bg-white shadow-[4px_4px_0px_#192B4D]">
+              <table className="w-full text-left text-sm whitespace-nowrap min-w-[700px]">
+                <thead className="bg-leminski-blue border-b-4 border-leminski-blue">
                   <tr>
-                    <td colSpan={10} className="p-8 text-center text-leminski-blue/50 font-bold text-lg">
-                      Nenhum registro encontrado.
-                    </td>
+                    <th className="p-4 font-black text-white uppercase tracking-wider">Status</th>
+                    <th className="p-4 font-black text-white uppercase tracking-wider">Data/Hora</th>
+                    <th className="p-4 font-black text-white uppercase tracking-wider">Nome</th>
+                    <th className="p-4 font-black text-white uppercase tracking-wider">CPF</th>
+                    <th className="p-4 font-black text-white uppercase tracking-wider">WhatsApp</th>
+                    <th className="p-4 font-black text-white uppercase tracking-wider">E-mail</th>
+                    <th className="p-4 font-black text-white uppercase tracking-wider">Cidade</th>
+                    <th className="p-4 font-black text-white uppercase tracking-wider">Estado</th>
+                    <th className="p-4 font-black text-right text-white uppercase tracking-wider">Pontos</th>
+                    <th className="p-4 font-black text-right text-white uppercase tracking-wider">Tempo (ms)</th>
                   </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody className="divide-y-2 divide-leminski-blue/20">
+                  {filtered.map(p => {
+                    const status = p.status;
+                    const score = p.score || 0;
+                    const timeMs = p.timeMs || p.time_ms || 0;
+                    const playedAt = p.playedAt || p.played_at || 0;
+                    const fullName = p.fullName || p.full_name || '';
+                    const displayName = p.displayName || p.display_name || '';
+                    
+                    return (
+                      <tr key={p.id} className="hover:bg-leminski-peach/30 transition">
+                        <td className="p-4">
+                          {status === 'iniciado' || (score === 0 && timeMs === 0) ? (
+                            <span className="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-bold rounded-full">Incompleto</span>
+                          ) : (
+                            <span className="px-2 py-1 bg-green-100 text-green-800 text-xs font-bold rounded-full">Concluído</span>
+                          )}
+                        </td>
+                        <td className="p-4 text-leminski-blue font-medium">{new Date(playedAt).toLocaleString('pt-BR')}</td>
+                        <td className="p-4 font-bold text-leminski-blue">{fullName} <br/><span className="text-xs text-leminski-blue/60">{displayName}</span></td>
+                        <td className="p-4 font-medium text-leminski-blue">{p.cpf}</td>
+                        <td className="p-4 font-medium text-leminski-blue">{p.whatsapp}</td>
+                        <td className="p-4 font-medium text-leminski-blue">{p.email}</td>
+                        <td className="p-4 font-medium text-leminski-blue">{p.city}</td>
+                        <td className="p-4 font-medium text-leminski-blue">{p.state}</td>
+                        <td className="p-4 text-right font-black text-leminski-red">{score}</td>
+                        <td className="p-4 text-right font-bold text-leminski-blue/70">{timeMs}</td>
+                      </tr>
+                    );
+                  })}
+                  {filtered.length === 0 && (
+                    <tr>
+                      <td colSpan={10} className="p-8 text-center text-leminski-blue/50 font-bold text-lg">
+                        Nenhum registro encontrado.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </div>
     </div>
