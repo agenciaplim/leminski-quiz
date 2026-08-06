@@ -163,8 +163,18 @@ export default function Quiz() {
   const levelInfo = getLevelLabel(currentQuestion.level);
 
   return (
-    <div className="flex flex-col w-full min-h-full p-4 md:p-10 overflow-y-auto">
-      <header className="flex flex-col md:flex-row items-center justify-between mb-6 md:mb-12 space-y-4 md:space-y-0">
+    <div className="flex flex-col w-full min-h-full p-4 md:p-10 overflow-y-auto relative">
+      {/* Imagem de fundo pouco visível */}
+      <div 
+        className="fixed inset-0 z-0 opacity-15 pointer-events-none" 
+        style={{ 
+          backgroundImage: 'url(/fundo-quiz.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }} 
+      />
+
+      <header className="relative z-10 flex flex-col md:flex-row items-center justify-between mb-6 md:mb-12 space-y-4 md:space-y-0">
         <div className="flex space-x-2 md:space-x-4">
           <div className="glass-panel px-4 py-2 md:px-6 md:py-3 rounded-full text-sm md:text-2xl font-bold text-leminski-blue whitespace-nowrap">
             Pergunta {currentIndex + 1} / {questions.length}
@@ -182,7 +192,7 @@ export default function Quiz() {
         </div>
       </header>
 
-      <div className="flex-1 flex flex-col justify-center max-w-4xl mx-auto w-full space-y-6 md:space-y-12 pb-10 md:pb-20 my-auto">
+      <div className="relative z-10 flex-1 flex flex-col justify-center max-w-4xl mx-auto w-full space-y-6 md:space-y-12 pb-10 md:pb-20 my-auto">
         <h2 className="text-2xl md:text-4xl lg:text-5xl font-black leading-tight text-center text-leminski-light drop-shadow-[4px_4px_0px_#192B4D]">
           {currentQuestion.text}
         </h2>
