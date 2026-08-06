@@ -11,11 +11,11 @@ export default function Home() {
       
       {/* Background Image da Home */}
       <div 
-        className="fixed inset-0 z-0 opacity-15 pointer-events-none mix-blend-multiply" 
+        className="absolute top-[12%] md:top-[15%] left-0 right-0 h-[35%] z-0 opacity-15 pointer-events-none mix-blend-multiply" 
         style={{ 
           backgroundImage: 'url(/arte-leminski.png)',
           backgroundSize: 'contain',
-          backgroundPosition: 'top center',
+          backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
         }} 
       />
