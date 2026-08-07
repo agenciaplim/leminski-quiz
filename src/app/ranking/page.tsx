@@ -26,7 +26,7 @@ export default function Ranking() {
         if (navigator.onLine) {
           const { data, error } = await supabase
             .from('participants')
-            .select('id, displayName, score, timeMs')
+            .select('id, displayName, score, timeMs, cpf')
             .order('score', { ascending: false })
             .order('timeMs', { ascending: true })
             .limit(50);
@@ -34,9 +34,13 @@ export default function Ranking() {
           if (!error && data) {
             // Pegar apenas os locais que ainda NÃO subiram pra nuvem E que foram concluídos
             const localUnsynced = localAll.filter(p => !p.synced && p.status === 'concluido');
+            const unsyncedCpfs = localUnsynced.map(p => p.cpf);
             
-            // Junta os da nuvem com os que estão na fila local
-            finalData = [...data, ...localUnsynced];
+            // Remove from Supabase data any participant that is currently unsynced locally to prevent duplicate display when RLS blocks updates
+            const cleanSupabaseData = data.filter(p => !unsyncedCpfs.includes(p.cpf));
+            
+            // Junta os da nuvem limpos com os que estão na fila local
+            finalData = [...cleanSupabaseData, ...localUnsynced];
           } else {
             // Se falhar a requisição, usa o cache local apenas dos concluídos
             finalData = localAll.filter(p => p.status === 'concluido');

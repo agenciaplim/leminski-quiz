@@ -53,11 +53,16 @@ export default function SyncEngine() {
 
           if (existingLead?.id) {
             // Atualiza o registro existente (ex: pessoa terminou o quiz e agora tem pontuação)
-            const { error } = await supabase
+            const { data: updateData, error } = await supabase
               .from('participants')
               .update(payload)
-              .eq('id', existingLead.id);
-            syncError = error;
+              .eq('id', existingLead.id)
+              .select('id');
+            if (error) {
+              syncError = error;
+            } else if (!updateData || updateData.length === 0) {
+              syncError = new Error('RLS block: UPDATE allowed 0 rows');
+            }
           } else {
             // Cria um novo registro
             const { error } = await supabase

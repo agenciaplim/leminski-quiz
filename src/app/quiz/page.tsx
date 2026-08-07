@@ -121,13 +121,16 @@ export default function Quiz() {
               score: finalScore,
               timeMs: timeMs
             };
-            const { error } = await supabase
+            const { data: updateData, error } = await supabase
               .from('participants')
               .update(payload)
-              .eq('id', existingLead.id);
+              .eq('id', existingLead.id)
+              .select('id');
               
-            if (!error) {
+            if (!error && updateData && updateData.length > 0) {
               await db.participants.update(participant.id, { synced: true });
+            } else if (!error && (!updateData || updateData.length === 0)) {
+              console.error("Bloqueio de RLS no Supabase impediu o UPDATE.");
             }
           }
         } catch (e) {
