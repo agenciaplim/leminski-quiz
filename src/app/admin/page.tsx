@@ -167,7 +167,7 @@ export default function AdminPanel() {
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 md:gap-8 flex-1">
         {/* Sidebar Controls */}
-        <div className="glass-panel p-4 md:p-6 rounded-2xl flex flex-col space-y-6">
+        <div className="glass-panel p-4 md:p-6 rounded-2xl flex flex-col space-y-6 sticky top-6 self-start">
           <div className="space-y-4">
             <h3 className="text-lg md:text-xl font-bold text-leminski-blue uppercase">Status Operacional</h3>
             
