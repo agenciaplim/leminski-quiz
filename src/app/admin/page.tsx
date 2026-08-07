@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { db, Participant } from "@/lib/db";
 import { Download, Search, Settings, ShieldAlert, Trash2, RefreshCw } from "lucide-react";
 import Link from "next/link";
+import FullscreenButton from "@/components/FullscreenButton";
 
 import { supabase } from "@/lib/supabase";
 
@@ -156,7 +157,8 @@ export default function AdminPanel() {
           <Settings className="w-8 h-8 md:w-10 md:h-10 text-leminski-blue shrink-0" />
           <h1 className="text-xl md:text-3xl font-black text-leminski-blue uppercase">Painel Administrativo</h1>
         </div>
-        <div className="flex space-x-4">
+        <div className="flex items-center space-x-4">
+          <FullscreenButton inline className="w-10 h-10 md:w-12 md:h-12 bg-leminski-blue text-white rounded-full shadow-[2px_2px_0px_#192B4D] hover:bg-leminski-blue/90 active:translate-y-1 active:shadow-none transition-all flex items-center justify-center" />
           <Link href="/" className="px-4 py-2 md:px-6 md:py-3 bg-leminski-blue text-white rounded-full text-sm md:text-base font-bold hover:bg-leminski-blue/90 transition shadow-[2px_2px_0px_#192B4D] active:translate-y-1 active:shadow-none">
             Voltar ao Totem
           </Link>
