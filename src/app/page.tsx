@@ -46,9 +46,10 @@ export default function Home() {
       </div>
 
       {/* Patrocinadores (Bottom) */}
-      <div className="relative z-10 w-full mt-auto flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 opacity-100 bg-white p-4 md:p-6 rounded-[2rem] items-end">
+      <div className="relative z-10 w-full mt-auto flex flex-col md:flex-row items-end justify-center gap-8 md:gap-16 opacity-100 bg-white p-4 md:p-6 rounded-[2rem]">
         {/* Rouanet */}
         <div className="flex flex-col items-center">
+            <p className="text-xs md:text-sm tracking-widest uppercase mb-4 font-bold opacity-0 select-none pointer-events-none">X</p>
             <img src="/logo-rouanet.png" alt="Lei Rouanet" className="h-12 md:h-16 object-contain mix-blend-multiply" />
         </div>
         
