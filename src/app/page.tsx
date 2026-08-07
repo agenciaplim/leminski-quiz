@@ -11,7 +11,7 @@ export default function Home() {
       
       {/* Background Image da Home */}
       <div 
-        className="absolute top-[12%] md:top-[15%] left-0 right-0 h-[35%] z-0 opacity-15 pointer-events-none mix-blend-multiply" 
+        className="absolute top-[15%] md:top-[20%] left-0 right-0 h-[50%] md:h-[60%] z-0 opacity-80 pointer-events-none mix-blend-multiply" 
         style={{ 
           backgroundImage: 'url(/arte-leminski.png)',
           backgroundSize: 'contain',
@@ -30,15 +30,6 @@ export default function Home() {
 
       {/* Main Content (Center) */}
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center space-y-6 md:space-y-12 w-full my-8">
-        <div className="space-y-2 md:space-y-4">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-widest text-leminski-blue uppercase drop-shadow-[2px_2px_0px_rgba(25,43,77,0.3)]">
-            Festival
-          </h2>
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-leminski-light leading-tight drop-shadow-[4px_4px_0px_#192B4D]">
-            PAULO <br /> LEMINSKI
-          </h1>
-        </div>
-
         <div className="glass-panel p-6 md:p-8 rounded-2xl md:rounded-3xl w-full max-w-sm md:max-w-lg mt-6 md:mt-10">
           <h3 className="text-xl md:text-2xl lg:text-3xl font-black mb-2 md:mb-4 uppercase tracking-wider">Quiz Interativo</h3>
           <p className="text-base md:text-lg lg:text-xl font-medium leading-relaxed opacity-90">

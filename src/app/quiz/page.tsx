@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { quizQuestions, Question, Option } from "@/lib/quizData";
 import { db } from "@/lib/db";
+import { supabase } from "@/lib/supabase";
 import { useAudio } from "@/contexts/AudioContext";
 import { Timer } from "lucide-react";
 
@@ -106,6 +107,37 @@ export default function Quiz() {
           synced: false, // Agora sim a partida está pronta para ir pra nuvem
           status: 'concluido'
         });
+        
+        // Forçar sincronização imediata esperando o término antes de mudar de página
+        try {
+          const { data: existingLead } = await supabase
+            .from('participants')
+            .select('id')
+            .eq('cpf', cpf)
+            .maybeSingle();
+
+          if (existingLead?.id) {
+            const payload = {
+              score: finalScore,
+              timeMs: timeMs
+            };
+            const { error } = await supabase
+              .from('participants')
+              .update(payload)
+              .eq('id', existingLead.id);
+              
+            if (!error) {
+              await db.participants.update(participant.id, { synced: true });
+            }
+          }
+        } catch (e) {
+          console.error("Falha ao salvar finalScore no supabase na hora do quiz:", e);
+        }
+
+        // Dispara o evento de sincronização imediata por segurança para o caso de offline
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new Event('force-sync'));
+        }
       }
     }
     

@@ -87,9 +87,14 @@ export default function SyncEngine() {
     // Also run once on mount after 2 seconds
     const timeoutId = setTimeout(syncData, 2000);
 
+    // Listen for manual trigger (e.g. quiz completion)
+    const handleForceSync = () => { syncData(); };
+    window.addEventListener('force-sync', handleForceSync);
+
     return () => {
       clearInterval(intervalId);
       clearTimeout(timeoutId);
+      window.removeEventListener('force-sync', handleForceSync);
     };
   }, []);
 
