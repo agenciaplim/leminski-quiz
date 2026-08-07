@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { db, Participant } from "@/lib/db";
 import { supabase } from "@/lib/supabase";
 import { Trophy, ArrowLeft, Medal } from "lucide-react";
@@ -10,6 +10,7 @@ import { useAudio } from "@/contexts/AudioContext";
 export default function Ranking() {
   const [topPlayers, setTopPlayers] = useState<Participant[]>([]);
   const [highlightCpf, setHighlightCpf] = useState<string | null>(null);
+  const hasScrolled = useRef(false);
   const { playSfx } = useAudio();
 
   useEffect(() => {
@@ -20,11 +21,12 @@ export default function Ranking() {
   }, []);
 
   useEffect(() => {
-    if (highlightCpf && topPlayers.length > 0) {
+    if (highlightCpf && topPlayers.length > 0 && !hasScrolled.current) {
       setTimeout(() => {
         const el = document.getElementById(`player-${highlightCpf}`);
         if (el) {
           el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          hasScrolled.current = true;
         }
       }, 500);
     }
