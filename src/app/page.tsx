@@ -9,16 +9,7 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center w-full min-h-full p-4 md:p-10 text-center overflow-y-auto relative">
       
-      {/* Background Image da Home */}
-      <div 
-        className="absolute top-[2%] md:top-[5%] left-0 right-0 h-[45%] md:h-[50%] z-0 opacity-100 pointer-events-none mix-blend-multiply" 
-        style={{ 
-          backgroundImage: 'url(/arte-leminski.png)',
-          backgroundSize: 'contain',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }} 
-      />
+
 
       {/* Logos Area (Top) */}
       <div className="w-full relative z-10 flex justify-between items-start px-2 md:px-10 pt-4 md:pt-8 opacity-90">
@@ -29,8 +20,18 @@ export default function Home() {
       </div>
 
       {/* Main Content (Center) */}
-      <div className="relative z-10 flex-1 flex flex-col items-center justify-center space-y-6 md:space-y-12 w-full my-8">
-        <div className="glass-panel p-6 md:p-8 rounded-2xl md:rounded-3xl w-full max-w-sm md:max-w-lg mt-6 md:mt-10">
+      <div className="relative z-10 flex-1 flex flex-col items-center justify-center space-y-6 md:space-y-8 w-full my-8">
+        
+        {/* Imagem Central */}
+        <div className="w-full max-w-xl md:max-w-2xl px-4 md:px-0 shrink-0">
+          <img 
+            src="/arte-leminski.png" 
+            alt="Arte Festival Paulo Leminski" 
+            className="w-full h-auto object-contain mix-blend-multiply drop-shadow-sm" 
+          />
+        </div>
+
+        <div className="glass-panel p-6 md:p-8 rounded-2xl md:rounded-3xl w-full max-w-sm md:max-w-lg">
           <h3 className="text-xl md:text-2xl lg:text-3xl font-black mb-2 md:mb-4 uppercase tracking-wider">Quiz Interativo</h3>
           <p className="text-base md:text-lg lg:text-xl font-medium leading-relaxed opacity-90">
             Teste seus conhecimentos sobre o poeta e o festival e concorra a prêmios exclusivos!
