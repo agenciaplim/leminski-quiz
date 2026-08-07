@@ -146,7 +146,11 @@ export default function Cadastro() {
         playedAt: Date.now(),
         synced: false, // Agora sincroniza imediatamente assim que cadastra
         status: 'iniciado',
-        ip
+        ip,
+        sessionId: crypto.randomUUID(),
+        privacyPolicyVersion: 'v1.0',
+        rulesVersion: 'v1.0',
+        origin: 'totem'
       });
 
       sessionStorage.setItem("quiz_cpf", finalCpf);

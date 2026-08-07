@@ -18,6 +18,10 @@ export interface Participant {
   synced: boolean;
   status?: 'iniciado' | 'concluido';
   ip?: string;
+  sessionId?: string;
+  privacyPolicyVersion?: string;
+  rulesVersion?: string;
+  origin?: string;
 }
 
 const db = new Dexie('LeminskiQuizDB') as Dexie & {
