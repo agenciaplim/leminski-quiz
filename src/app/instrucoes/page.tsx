@@ -12,12 +12,12 @@ export default function Instrucoes() {
     playSfx('start');
   }, [playSfx]);
   return (
-    <div className="flex flex-col items-center justify-start w-full min-h-full p-4 md:p-10 text-center overflow-y-auto">
+    <div className="flex flex-col items-center justify-center w-full min-h-full p-4 md:p-10 text-center overflow-y-auto">
       <h1 className="text-3xl md:text-5xl font-black tracking-widest text-leminski-light uppercase mb-6 md:mb-8 drop-shadow-[4px_4px_0px_#192B4D] mt-4 md:mt-10">
         Como Funciona
       </h1>
 
-      <div className="flex-1 flex flex-col w-full space-y-4 md:space-y-8 max-w-2xl mx-auto">
+      <div className="flex flex-col w-full space-y-4 md:space-y-8 max-w-2xl mx-auto my-4 md:my-8">
         <div className="glass-panel p-4 md:p-8 rounded-2xl md:rounded-3xl flex items-center text-left border-l-8 border-l-leminski-blue">
           <div className="bg-leminski-peach p-3 md:p-4 rounded-full border-2 border-leminski-blue mr-4 md:mr-6 shrink-0 shadow-[2px_2px_0px_#192B4D]">
             <Brain className="w-8 h-8 md:w-12 md:h-12 text-leminski-blue" />

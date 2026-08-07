@@ -34,7 +34,7 @@ export default function Home() {
       </div>
 
       {/* Action Button */}
-      <div className="relative z-10 w-full pb-8 shrink-0">
+      <div className="relative z-10 w-full pb-8 shrink-0 flex flex-col items-center gap-4">
         <Link
           href="/cadastro"
           onClick={() => playSfx('select')}
@@ -42,6 +42,13 @@ export default function Home() {
         >
           Tocar para Iniciar
           <ChevronRight className="ml-2 md:ml-4 w-6 h-6 md:w-10 md:h-10" />
+        </Link>
+        <Link
+          href="/ranking"
+          onClick={() => playSfx('select')}
+          className="inline-flex items-center justify-center w-fit mx-auto py-3 px-6 md:py-4 md:px-8 rounded-full border-2 border-leminski-blue text-leminski-blue text-sm md:text-lg lg:text-xl font-bold uppercase tracking-wider whitespace-nowrap bg-white/50 backdrop-blur-sm transition-all active:translate-y-1"
+        >
+          Ver Ranking
         </Link>
       </div>
 

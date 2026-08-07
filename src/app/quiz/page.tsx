@@ -242,7 +242,7 @@ export default function Quiz() {
 
         <div className="flex flex-col space-y-3 md:space-y-6 w-full">
           {currentQuestion.options.map((opt) => {
-            let btnClass = "glass-panel text-left p-4 md:p-8 rounded-2xl md:rounded-3xl text-lg md:text-2xl lg:text-3xl font-bold transition-all active:translate-y-1 hover:bg-leminski-peach text-leminski-blue";
+            let btnClass = "glass-panel text-left p-4 md:p-8 rounded-2xl md:rounded-3xl text-lg md:text-2xl lg:text-3xl font-bold transition-all active:translate-y-1 active:bg-leminski-peach text-leminski-blue";
             
             if (showFeedback) {
               if (opt.isCorrect) {
