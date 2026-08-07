@@ -2,9 +2,13 @@
 
 import { useAudio } from "@/contexts/AudioContext";
 import { Volume2, VolumeX, Plus, Minus } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export default function MuteButton() {
   const { isMuted, volume, toggleMute, changeVolume } = useAudio();
+  const pathname = usePathname();
+
+  if (pathname === '/admin') return null;
 
   return (
     <div className="fixed top-6 right-6 z-50 flex items-center bg-leminski-blue text-white rounded-full shadow-xl overflow-hidden border-2 border-transparent hover:border-white/20 transition-all">
