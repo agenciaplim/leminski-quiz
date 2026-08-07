@@ -321,7 +321,7 @@ export default function Cadastro() {
 
       {/* Modal Regulamento */}
       {showRegulamento && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-10 bg-leminski-red/90 backdrop-blur-sm">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10 bg-leminski-red/90 backdrop-blur-sm">
           <div className="glass-panel w-full max-w-4xl max-h-[90vh] flex flex-col rounded-3xl overflow-hidden relative">
             <div className="flex justify-between items-center p-6 border-b border-white/10 shrink-0">
               <h2 className="text-2xl md:text-3xl font-black text-leminski-blue uppercase">Regulamento da Ação</h2>
@@ -431,8 +431,6 @@ export default function Cadastro() {
                 <p>A participação nesta ação implica aceitação integral deste Regulamento.</p>
                 <p>As dúvidas, controvérsias ou situações não previstas serão avaliadas pela promotora, observada a legislação aplicável.</p>
                 <p>Este Regulamento ficará disponível ao público durante o período da ação por meio do totem, QR Code, link oficial ou outro canal de fácil acesso.</p>
-                
-                <p className="text-sm italic mt-8 text-leminski-blue/60">Documento preliminar para validação jurídica.</p>
               </div>
             </div>
           </div>
@@ -441,7 +439,7 @@ export default function Cadastro() {
 
       {/* Modal Política de Privacidade */}
       {showPolitica && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-10 bg-leminski-red/90 backdrop-blur-sm">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10 bg-leminski-red/90 backdrop-blur-sm">
           <div className="glass-panel w-full max-w-4xl max-h-[90vh] flex flex-col rounded-3xl overflow-hidden relative">
             <div className="flex justify-between items-center p-6 border-b border-white/10 shrink-0">
               <h2 className="text-2xl md:text-3xl font-black text-leminski-blue uppercase">Política de Privacidade</h2>
@@ -556,8 +554,6 @@ export default function Cadastro() {
                 Endereço: R. Pref. Ângelo Ferrario Lopes, nº 433, Box 04, CEP 80.050-330<br/>
                 E-mail: websites@plim.ag<br/>
                 Telefone: (41) 99674-0243</p>
-                
-                <p className="text-sm italic mt-8 text-leminski-blue/60">Documento preliminar para validação jurídica.</p>
               </div>
             </div>
           </div>
