@@ -27,7 +27,7 @@ export default function Home() {
           <img 
             src="/arte-leminski.png" 
             alt="Arte Festival Paulo Leminski" 
-            className="w-full h-auto object-contain mix-blend-multiply drop-shadow-sm" 
+            className="w-full h-auto object-contain mix-blend-multiply" 
           />
         </div>
 
