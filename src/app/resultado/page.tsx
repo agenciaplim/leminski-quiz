@@ -29,31 +29,31 @@ export default function Resultado() {
 
       setParticipant(me);
 
-      // Calculate Rank
+      // Calculate Rank using identical logic to ranking/page.tsx
       try {
-        const local = await db.participants.toArray();
-        let remote: any[] = [];
+        const localAll = await db.participants.toArray();
+        let finalData: any[] = [];
         
         if (navigator.onLine) {
-          const { data } = await supabase
+          const { data, error } = await supabase
             .from('participants')
-            .select('*')
+            .select('id, displayName, score, timeMs, cpf')
             .order('score', { ascending: false })
             .order('timeMs', { ascending: true });
             
-          if (data) remote = data;
+          if (!error && data) {
+            const localUnsynced = localAll.filter(p => !p.synced && p.status === 'concluido');
+            const unsyncedCpfs = localUnsynced.map(p => p.cpf);
+            const cleanSupabaseData = data.filter(p => !unsyncedCpfs.includes(p.cpf));
+            finalData = [...cleanSupabaseData, ...localUnsynced];
+          } else {
+            finalData = localAll.filter(p => p.status === 'concluido');
+          }
+        } else {
+          finalData = localAll.filter(p => p.status === 'concluido');
         }
 
-        const map = new Map();
-        remote.forEach(p => map.set(p.cpf, p));
-        local.forEach(p => {
-          if (!map.has(p.cpf) || p.score > map.get(p.cpf).score) {
-             map.set(p.cpf, p);
-          }
-        });
-
-        const all = Array.from(map.values());
-        const sorted = all.sort((a, b) => {
+        const sorted = finalData.sort((a, b) => {
           if (b.score !== a.score) return b.score - a.score;
           return a.timeMs - b.timeMs;
         });

@@ -10,8 +10,11 @@ export default function MuteButton() {
 
   if (pathname === '/admin') return null;
 
+  const isQuiz = pathname?.startsWith('/quiz');
+  const positionClass = isQuiz ? "bottom-6" : "top-6";
+
   return (
-    <div className="fixed top-6 right-6 z-50 flex items-center bg-leminski-blue text-white rounded-full shadow-xl overflow-hidden border-2 border-transparent hover:border-white/20 transition-all">
+    <div className={`fixed ${positionClass} right-6 z-50 flex items-center bg-leminski-blue text-white rounded-full shadow-xl overflow-hidden border-2 border-transparent hover:border-white/20 transition-all`}>
       <button
         onClick={() => changeVolume(-0.1)}
         className="w-12 h-14 flex items-center justify-center hover:bg-white/20 active:bg-white/30 transition-colors"

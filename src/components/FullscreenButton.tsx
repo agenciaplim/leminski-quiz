@@ -37,10 +37,13 @@ export default function FullscreenButton({ className, inline }: { className?: st
 
   if (!inline && pathname === '/admin') return null;
 
+  const isQuiz = pathname?.startsWith('/quiz');
+  const positionClass = isQuiz ? "bottom-6" : "top-6";
+
   return (
     <button
       onClick={toggleFullscreen}
-      className={className || "fixed top-6 right-[195px] z-50 w-16 h-16 bg-leminski-blue text-white rounded-full shadow-xl hover:bg-leminski-blue/90 active:translate-y-1 active:shadow-none transition-all flex items-center justify-center border-2 border-transparent hover:border-white/20"}
+      className={className || `fixed ${positionClass} right-[195px] z-50 w-16 h-16 bg-leminski-blue text-white rounded-full shadow-xl hover:bg-leminski-blue/90 active:translate-y-1 active:shadow-none transition-all flex items-center justify-center border-2 border-transparent hover:border-white/20`}
       aria-label={isFullscreen ? "Sair da tela cheia" : "Tela cheia"}
     >
       {isFullscreen ? (

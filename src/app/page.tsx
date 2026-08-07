@@ -11,19 +11,13 @@ export default function Home() {
       
 
 
-      {/* Logos Area (Top) */}
-      <div className="w-full relative z-10 flex justify-between items-start px-2 md:px-10 pt-4 md:pt-8 opacity-90">
-        <div className="text-left flex flex-col items-start">
-          <p className="text-xs md:text-sm tracking-widest text-leminski-blue uppercase mb-2 md:mb-3 font-bold">Realização</p>
-          <img src="/logo-realizacao.png" alt="Realização - Festival Paulo Leminski" className="h-12 md:h-16 lg:h-20 object-contain" />
-        </div>
-      </div>
+
 
       {/* Main Content (Center) */}
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center space-y-6 md:space-y-8 w-full my-8">
         
         {/* Imagem Central */}
-        <div className="w-full max-w-xl md:max-w-2xl px-4 md:px-0 shrink-0">
+        <div className="w-full max-w-3xl md:max-w-4xl lg:max-w-5xl px-4 md:px-0 shrink-0 mt-4">
           <img 
             src="/arte-leminski.png" 
             alt="Arte Festival Paulo Leminski" 
