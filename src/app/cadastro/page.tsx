@@ -177,7 +177,7 @@ export default function Cadastro() {
             <div className="flex-1">
               <p className="text-base md:text-xl text-red-600 font-bold">{error}</p>
               {error.includes("já participou") && (
-                <Link href="/ranking" className="mt-3 md:mt-4 inline-block bg-leminski-blue text-white px-4 md:px-6 py-2 md:py-3 rounded-full font-bold text-sm md:text-base">
+                <Link href={`/ranking?highlight=${formData.cpf}`} className="mt-3 md:mt-4 inline-block bg-leminski-blue text-white px-4 md:px-6 py-2 md:py-3 rounded-full font-bold text-sm md:text-base">
                   Ver Ranking
                 </Link>
               )}
