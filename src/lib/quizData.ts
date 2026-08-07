@@ -51,11 +51,11 @@ export const quizQuestions: Question[] = [
     id: 9, level: 'easy', text: 'Complete o verso de Paulo Leminski: "não discuto / com o destino ..."',
     options: [{ id: "a", text: "... o que pintar eu assino.", isCorrect: true }, { id: "b", text: "... ser poeta é o meu destino.", isCorrect: false }, { id: "c", text: "... mão no peito e canta o hino.", isCorrect: false }, { id: "d", text: "... o meu é beber no Lino.", isCorrect: false }]
   },
+  // MEDIUM
   {
-    id: 10, level: 'easy', text: "De qual importante maestro, arranjador e compositor brasileiro, nascido em Paranaguá, Paulo Leminski era primo?",
+    id: 10, level: 'medium', text: "De qual importante maestro, arranjador e compositor brasileiro, nascido em Paranaguá, Paulo Leminski era primo?",
     options: [{ id: "a", text: "Tom Jobim", isCorrect: false }, { id: "b", text: "Rogério Duprat", isCorrect: false }, { id: "c", text: "Waltel Branco", isCorrect: true }, { id: "d", text: "Heitor Villa-Lobos", isCorrect: false }]
   },
-  // MEDIUM
   {
     id: 11, level: 'medium', text: "A poesia visual e experimental de Leminski dialoga diretamente com qual movimento brasileiro?",
     options: [{ id: "a", text: "Concretismo", isCorrect: true }, { id: "b", text: "Regionalismo", isCorrect: false }, { id: "c", text: "Naturalismo", isCorrect: false }, { id: "d", text: "Trovadorismo", isCorrect: false }]
@@ -73,8 +73,8 @@ export const quizQuestions: Question[] = [
     options: [{ id: "a", text: "Bacacheri", isCorrect: false }, { id: "b", text: "Abranches", isCorrect: false }, { id: "c", text: "Pilarzinho", isCorrect: true }, { id: "d", text: "Água verde", isCorrect: false }]
   },
   {
-    id: 15, level: 'medium', text: "O mural gigante de Paulo Leminski, no Centro de Curitiba, fica na esquina entre as ruas:",
-    options: [{ id: "a", text: "Travessa da Lapa com Rua XV de Novembro", isCorrect: true }, { id: "b", text: "Largo da Ordem com Rua São Francisco", isCorrect: false }, { id: "c", text: "Avenida Batel com Rua Bispo Dom José", isCorrect: false }, { id: "d", text: "Praça Tiradentes com Rua Barão do Serro Azul", isCorrect: false }]
+    id: 15, level: 'medium', text: "O mural gigante de Paulo Leminski, no Centro de Curitiba, fica perto de qual ponto turístico:",
+    options: [{ id: "a", text: "Prédio Histórico da UFPR – Praça Santos Andrade", isCorrect: true }, { id: "b", text: "Palácio Avenida", isCorrect: false }, { id: "c", text: "Paço da Liberdade", isCorrect: false }, { id: "d", text: "Cavalo Babão", isCorrect: false }]
   },
   {
     id: 16, level: 'medium', text: "Poliglota de mão cheia! Além do português, em quantos idiomas Leminski se virava?",
