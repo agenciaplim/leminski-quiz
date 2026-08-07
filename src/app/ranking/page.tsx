@@ -9,7 +9,26 @@ import { useAudio } from "@/contexts/AudioContext";
 
 export default function Ranking() {
   const [topPlayers, setTopPlayers] = useState<Participant[]>([]);
+  const [highlightCpf, setHighlightCpf] = useState<string | null>(null);
   const { playSfx } = useAudio();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const searchParams = new URLSearchParams(window.location.search);
+      setHighlightCpf(searchParams.get("highlight"));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (highlightCpf && topPlayers.length > 0) {
+      setTimeout(() => {
+        const el = document.getElementById(`player-${highlightCpf}`);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 500);
+    }
+  }, [highlightCpf, topPlayers]);
 
   useEffect(() => {
     playSfx('ranking');
@@ -29,7 +48,7 @@ export default function Ranking() {
             .select('id, displayName, score, timeMs, cpf')
             .order('score', { ascending: false })
             .order('timeMs', { ascending: true })
-            .limit(50);
+            .limit(1000);
             
           if (!error && data) {
             // Pegar apenas os locais que ainda NÃO subiram pra nuvem E que foram concluídos
@@ -56,7 +75,7 @@ export default function Ranking() {
           return a.timeMs - b.timeMs; // Menor tempo
         });
         
-        setTopPlayers(sorted.slice(0, 10)); // Top 10
+        setTopPlayers(sorted.slice(0, 500)); // Mostrar até 500
       } catch (err) {
         console.error("Erro ao montar ranking", err);
       }
@@ -76,7 +95,7 @@ export default function Ranking() {
   };
 
   return (
-    <div className="flex flex-col w-full min-h-full p-4 md:p-10 bg-leminski-peach">
+    <div className="flex flex-col w-full h-full p-4 md:p-10 bg-leminski-peach overflow-y-auto relative">
       <header className="flex items-center justify-between mb-10 shrink-0">
         <Link href="/" className="p-4 rounded-full glass-panel active:translate-y-1 transition-transform flex justify-center items-center">
           <ArrowLeft className="w-8 h-8 text-leminski-blue" />
@@ -110,10 +129,13 @@ export default function Ranking() {
             } else if (index === 2) {
               rowClass = "bg-orange-400 border-4 border-leminski-blue p-6 rounded-[1.5rem] flex items-center justify-between shadow-[4px_4px_0px_#192B4D] mt-2";
               posClass = "text-4xl font-black text-leminski-blue w-16 text-center";
+            } else if (player.cpf === highlightCpf) {
+              rowClass = "bg-white border-4 border-leminski-red p-6 flex items-center justify-between shadow-[4px_4px_0px_#E32626] mt-2 animate-pulse";
+              posClass = "text-4xl font-black text-leminski-red w-16 text-center";
             }
 
             return (
-              <div key={player.id} className={rowClass}>
+              <div key={player.id} id={`player-${player.cpf}`} className={rowClass}>
                 <div className="flex items-center space-x-6">
                   <div className={posClass}>
                     {index === 0 ? <Medal className="w-12 h-12 text-leminski-blue mx-auto" /> : `${index + 1}º`}
@@ -126,13 +148,13 @@ export default function Ranking() {
                 <div className="flex items-center space-x-12">
                   <div className="flex flex-col items-end">
                     <span className="text-sm text-leminski-blue/70 uppercase tracking-widest font-bold">Pontos</span>
-                    <span className={`font-black text-leminski-blue ${index === 0 ? 'text-5xl' : 'text-4xl'}`}>
+                    <span className={`font-black ${index === 0 ? 'text-5xl text-leminski-blue' : player.cpf === highlightCpf ? 'text-4xl text-leminski-red' : 'text-4xl text-leminski-blue'}`}>
                       {player.score}
                     </span>
                   </div>
                   <div className="flex flex-col items-end w-24">
                     <span className="text-sm text-leminski-blue/70 uppercase tracking-widest font-bold">Tempo</span>
-                    <span className="text-2xl font-bold text-leminski-blue">
+                    <span className={`text-2xl font-bold ${player.cpf === highlightCpf ? 'text-leminski-red' : 'text-leminski-blue'}`}>
                       {formatTime(player.timeMs)}
                     </span>
                   </div>

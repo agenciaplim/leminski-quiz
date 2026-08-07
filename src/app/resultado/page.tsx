@@ -117,7 +117,7 @@ export default function Resultado() {
             </span>
             
             <Link 
-              href="/ranking"
+              href={`/ranking?highlight=${participant.cpf}`}
               className="flex items-center justify-center bg-leminski-blue hover:bg-leminski-blue/90 border-2 border-leminski-blue transition-colors py-3 px-6 md:py-4 md:px-8 rounded-full text-base md:text-xl font-bold text-white w-full max-w-xs whitespace-nowrap shadow-[4px_4px_0px_rgba(25,43,77,0.3)] active:translate-y-1 active:shadow-none"
             >
               <BarChart2 className="w-5 h-5 mr-2 md:w-6 md:h-6 md:mr-3" />
