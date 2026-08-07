@@ -7,6 +7,36 @@ import { ChevronLeft, ChevronRight, AlertCircle, X } from "lucide-react";
 import Link from "next/link";
 import { useAudio } from "@/contexts/AudioContext";
 
+function formatCPF(value: string) {
+  return value
+    .replace(/\D/g, "")
+    .replace(/(\d{3})(\d)/, "$1.$2")
+    .replace(/(\d{3})(\d)/, "$1.$2")
+    .replace(/(\d{3})(\d{1,2})$/, "$1-$2")
+    .slice(0, 14);
+}
+
+function isValidCPF(cpf: string) {
+  cpf = cpf.replace(/\D/g, "");
+  if (cpf.length !== 11) return false;
+  if (/^(\d)\1+$/.test(cpf)) return false;
+
+  let sum = 0;
+  let remainder;
+  for (let i = 1; i <= 9; i++) sum = sum + parseInt(cpf.substring(i - 1, i)) * (11 - i);
+  remainder = (sum * 10) % 11;
+  if (remainder === 10 || remainder === 11) remainder = 0;
+  if (remainder !== parseInt(cpf.substring(9, 10))) return false;
+
+  sum = 0;
+  for (let i = 1; i <= 10; i++) sum = sum + parseInt(cpf.substring(i - 1, i)) * (12 - i);
+  remainder = (sum * 10) % 11;
+  if (remainder === 10 || remainder === 11) remainder = 0;
+  if (remainder !== parseInt(cpf.substring(10, 11))) return false;
+
+  return true;
+}
+
 export default function Cadastro() {
   const router = useRouter();
   const { playSfx } = useAudio();
@@ -40,6 +70,12 @@ export default function Cadastro() {
         return;
       }
 
+      if (!isValidCPF(formData.cpf)) {
+        setError("CPF inválido. Por favor, verifique os números digitados.");
+        setLoading(false);
+        return;
+      }
+
       if (!formData.termsAccepted) {
         setError("Você precisa aceitar os Termos de Participação para continuar.");
         setLoading(false);
@@ -67,6 +103,15 @@ export default function Cadastro() {
           : names[0] || "Jogador Teste";
       }
 
+      let ip = "";
+      try {
+        const ipRes = await fetch("https://api.ipify.org?format=json");
+        const ipData = await ipRes.json();
+        ip = ipData.ip;
+      } catch (e) {
+        console.error("Não foi possível obter o IP", e);
+      }
+
       await db.participants.add({
         ...formData,
         cpf: finalCpf,
@@ -75,7 +120,8 @@ export default function Cadastro() {
         timeMs: 0,
         playedAt: Date.now(),
         synced: false, // Agora sincroniza imediatamente assim que cadastra
-        status: 'iniciado'
+        status: 'iniciado',
+        ip
       });
 
       sessionStorage.setItem("quiz_cpf", finalCpf);
@@ -127,13 +173,14 @@ export default function Cadastro() {
           </div>
           
           <div>
-            <label className="block text-base md:text-xl font-bold mb-1 md:mb-2 text-leminski-blue">CPF (Somente números)</label>
+            <label className="block text-base md:text-xl font-bold mb-1 md:mb-2 text-leminski-blue">CPF</label>
             <input 
-              type="number" 
+              type="text" 
+              inputMode="numeric"
               required
               className="w-full bg-white border-2 border-leminski-blue/30 rounded-xl md:rounded-2xl p-3 md:p-5 text-lg md:text-2xl text-leminski-blue focus:outline-none focus:border-leminski-red focus:ring-4 focus:ring-leminski-red/20 font-medium"
               value={formData.cpf}
-              onChange={e => setFormData({...formData, cpf: e.target.value})}
+              onChange={e => setFormData({...formData, cpf: formatCPF(e.target.value)})}
             />
           </div>
 

@@ -11,6 +11,7 @@ export default function AdminPanel() {
   const [participants, setParticipants] = useState<Participant[]>([]);
   const [globalParticipants, setGlobalParticipants] = useState<any[]>([]);
   const [viewMode, setViewMode] = useState<'local' | 'global'>('local');
+  const [sortMode, setSortMode] = useState<'date' | 'score'>('date');
   const [isLoadingGlobal, setIsLoadingGlobal] = useState(false);
   
   const [search, setSearch] = useState("");
@@ -101,6 +102,21 @@ export default function AdminPanel() {
     return cpf.includes(search) || 
       fullName.toLowerCase().includes(search.toLowerCase()) ||
       displayName.toLowerCase().includes(search.toLowerCase());
+  }).sort((a, b) => {
+    if (sortMode === 'score') {
+      const scoreA = a.score || 0;
+      const scoreB = b.score || 0;
+      if (scoreA !== scoreB) return scoreB - scoreA;
+      // desempate por tempo (menor tempo ganha)
+      const timeA = a.timeMs || a.time_ms || 0;
+      const timeB = b.timeMs || b.time_ms || 0;
+      return timeA - timeB;
+    } else {
+      // sortMode === 'date'
+      const dateA = a.playedAt || a.played_at || 0;
+      const dateB = b.playedAt || b.played_at || 0;
+      return dateB - dateA;
+    }
   });
 
   if (!isAuthenticated) {
@@ -236,6 +252,21 @@ export default function AdminPanel() {
                 </button>
               )}
             </div>
+            <div className="flex items-center space-x-2">
+              <span className="text-sm font-bold text-leminski-blue/70 uppercase">Ordenar por:</span>
+              <button 
+                onClick={() => setSortMode('date')}
+                className={`px-4 py-1.5 rounded-full text-sm font-bold transition-all ${sortMode === 'date' ? 'bg-leminski-blue text-white' : 'bg-leminski-blue/10 text-leminski-blue hover:bg-leminski-blue/20'}`}
+              >
+                Data
+              </button>
+              <button 
+                onClick={() => setSortMode('score')}
+                className={`px-4 py-1.5 rounded-full text-sm font-bold transition-all ${sortMode === 'score' ? 'bg-leminski-blue text-white' : 'bg-leminski-blue/10 text-leminski-blue hover:bg-leminski-blue/20'}`}
+              >
+                Ranking
+              </button>
+            </div>
             <div className="relative w-full md:w-80">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-leminski-blue/50 w-5 h-5" />
               <input 
@@ -265,6 +296,7 @@ export default function AdminPanel() {
                     <th className="p-4 font-black text-white uppercase tracking-wider">E-mail</th>
                     <th className="p-4 font-black text-white uppercase tracking-wider">Cidade</th>
                     <th className="p-4 font-black text-white uppercase tracking-wider">Estado</th>
+                    <th className="p-4 font-black text-white uppercase tracking-wider">IP</th>
                     <th className="p-4 font-black text-right text-white uppercase tracking-wider">Pontos</th>
                     <th className="p-4 font-black text-right text-white uppercase tracking-wider">Tempo (ms)</th>
                   </tr>
@@ -294,6 +326,7 @@ export default function AdminPanel() {
                         <td className="p-4 font-medium text-leminski-blue">{p.email}</td>
                         <td className="p-4 font-medium text-leminski-blue">{p.city}</td>
                         <td className="p-4 font-medium text-leminski-blue">{p.state}</td>
+                        <td className="p-4 font-medium text-leminski-blue/50 text-xs">{p.ip || p.ip_address || '-'}</td>
                         <td className="p-4 text-right font-black text-leminski-red">{score}</td>
                         <td className="p-4 text-right font-bold text-leminski-blue/70">{timeMs}</td>
                       </tr>
