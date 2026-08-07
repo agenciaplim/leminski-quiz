@@ -114,8 +114,8 @@ export const quizQuestions: Question[] = [
     options: [{ id: "a", text: "O Casarão Concreto", isCorrect: false }, { id: "b", text: "O Sarau do Batel", isCorrect: false }, { id: "c", text: "A Toca dos Poetas", isCorrect: false }, { id: "d", text: "O Guruato da Marginália", isCorrect: true }]
   },
   {
-    id: 25, level: 'hard', text: "O verso 'Meu coração de polaco voltou' ganhou versão em polonês. Qual é a certa?",
-    options: [{ id: "a", text: "Polskie serce znów bije", isCorrect: false }, { id: "b", text: "Moje serce wróciło do Polski", isCorrect: false }, { id: "c", text: "Powróciło moje polskie serce", isCorrect: true }, { id: "d", text: "Wróciło moje słowiańskie serce", isCorrect: false }]
+    id: 25, level: 'hard', text: "Direto da terra dos pierogis! 🇵🇱 O verso \"Meu coração de polaco voltou\", de Leminski, ganhou versão em polonês. Qual é a certa?",
+    options: [{ id: "a", text: "Moje serce znów bije", isCorrect: false }, { id: "b", text: "Moje serce wróciło do powróciło", isCorrect: false }, { id: "c", text: "Powróciło moje polskie serce", isCorrect: true }, { id: "d", text: "Wróciło moje słowiańskie serce", isCorrect: false }]
   },
   {
     id: 26, level: 'hard', text: "Com quem Leminski aprendeu seus primeiros acordes de violão?",
