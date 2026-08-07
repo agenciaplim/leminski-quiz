@@ -82,12 +82,37 @@ export default function Cadastro() {
         return;
       }
 
-      const existing = await db.participants.where("cpf").equals(formData.cpf).first();
+      // 1. Checagem Local (IndexedDB) - procurando pelo CPF formatado ou só os números
+      const numericCpf = formData.cpf.replace(/\D/g, "");
+      const existingLocal = await db.participants
+        .filter(p => Boolean(p.cpf === formData.cpf || (p.cpf && p.cpf.replace(/\D/g, "") === numericCpf)))
+        .first();
       
-      if (existing) {
+      if (existingLocal) {
         setError("Você já participou deste quiz. Confira sua posição no ranking e boa sorte!");
         setLoading(false);
         return;
+      }
+
+      // 2. Checagem Remota (Supabase) - evita jogar em totens diferentes ou no celular e depois no totem
+      if (navigator.onLine) {
+        try {
+          // Importa supabase dinamicamente se necessário ou usa import global
+          const { supabase } = await import("@/lib/supabase");
+          const { data: existingRemote } = await supabase
+            .from('participants')
+            .select('id')
+            .or(`cpf.eq.${formData.cpf},cpf.eq.${numericCpf}`)
+            .limit(1);
+            
+          if (existingRemote && existingRemote.length > 0) {
+            setError("Você já participou deste quiz. Confira sua posição no ranking e boa sorte!");
+            setLoading(false);
+            return;
+          }
+        } catch (e) {
+          console.error("Erro ao verificar CPF remoto:", e);
+        }
       }
 
       let finalCpf = formData.cpf.trim();
