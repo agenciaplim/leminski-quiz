@@ -34,7 +34,7 @@ export default function RootLayout({
           <FullscreenButton />
           <IdleTimeout />
           <div className="relative flex-1 w-full h-full mx-auto bg-leminski-red flex flex-col">
-            <main className="relative z-10 w-full h-full flex flex-col no-scrollbar overflow-y-auto">
+            <main className="relative w-full h-full flex flex-col no-scrollbar overflow-y-auto">
               {children}
             </main>
           </div>
