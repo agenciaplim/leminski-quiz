@@ -11,7 +11,7 @@ export default function Home() {
       
       {/* Background Image da Home */}
       <div 
-        className="absolute top-[15%] md:top-[20%] left-0 right-0 h-[50%] md:h-[60%] z-0 opacity-80 pointer-events-none mix-blend-multiply" 
+        className="absolute top-[2%] md:top-[5%] left-0 right-0 h-[45%] md:h-[50%] z-0 opacity-100 pointer-events-none mix-blend-multiply" 
         style={{ 
           backgroundImage: 'url(/arte-leminski.png)',
           backgroundSize: 'contain',

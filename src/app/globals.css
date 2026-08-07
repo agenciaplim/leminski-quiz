@@ -3,7 +3,7 @@
 @theme {
   --color-leminski-peach: #F4C3A3;
   --color-leminski-pink: #E99D8F;
-  --color-leminski-red: #DF5D36;
+  --color-leminski-red: #E94F2E;
   --color-leminski-blue: #192B4D;
   --color-leminski-light: #FDFBF7;
 }
@@ -11,7 +11,7 @@
 @layer base {
   body {
     font-family: 'Outfit', sans-serif !important;
-    background-color: #DF5D36;
+    background-color: #E94F2E;
     color: #FDFBF7;
     overscroll-behavior-y: none;
     user-select: none;
@@ -37,7 +37,7 @@
   }
   
   .glass-button {
-    background: #DF5D36;
+    background: #E94F2E;
     border: 3px solid #192B4D;
     box-shadow: 4px 4px 0px #192B4D;
     color: #FDFBF7;
