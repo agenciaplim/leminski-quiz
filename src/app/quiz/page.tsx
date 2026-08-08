@@ -169,8 +169,9 @@ export default function Quiz() {
     let newKnowledgeScore = knowledgeScore;
     if (option.isCorrect) {
       const qLevel = questions[currentIndex].level;
-      const points = qLevel === 'easy' ? 100 : qLevel === 'medium' ? 200 : 300;
-      newKnowledgeScore += points;
+      const basePoints = qLevel === 'easy' ? 100 : qLevel === 'medium' ? 200 : 300;
+      const timeBonus = timeLeft; // Cada segundo que sobrou vale 1 ponto extra
+      newKnowledgeScore += (basePoints + timeBonus);
       setKnowledgeScore(newKnowledgeScore);
     }
 
