@@ -262,8 +262,8 @@ export default function Quiz() {
           })}
         </div>
         
-        <div className="w-full flex justify-center mt-12 md:mt-24 pb-8 md:pb-0 opacity-50 mix-blend-multiply pointer-events-none shrink-0">
-          <img src="/arte-leminski.png" alt="Festival Paulo Leminski" className="max-h-[120px] md:max-h-[200px] object-contain" />
+        <div className="w-full flex justify-center mt-12 md:mt-24 pb-8 md:pb-0 opacity-50 mix-blend-multiply pointer-events-none shrink-0 px-4">
+          <img src="/arte-leminski.png" alt="Festival Paulo Leminski" className="w-full max-w-lg md:max-w-3xl object-contain" />
         </div>
       </div>
     </div>
