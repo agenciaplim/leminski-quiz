@@ -66,7 +66,7 @@ export const quizQuestions: Question[] = [
   },
   {
     id: 13, level: 'medium', text: "Paulo Leminski era _______ mas fez uma poesia em homenagem a um título do _________",
-    options: [{ id: "a", text: "Palmeirense, Corinthians", isCorrect: false }, { id: "b", text: "Corinthiano, Palmeiras", isCorrect: false }, { id: "c", text: "Coxa-Branca, Athletico", isCorrect: false }, { id: "d", text: "Atleticano, Coritiba", isCorrect: true }]
+    options: [{ id: "a", text: "Palmeirense, Corinthians", isCorrect: false }, { id: "b", text: "Corinthiano, Palmeiras", isCorrect: false }, { id: "c", text: "Coxa-Branca, Athletico", isCorrect: false }, { id: "d", text: "Athleticano, Coritiba", isCorrect: true }]
   },
   {
     id: 14, level: 'medium', text: "Em qual bairro de Curitiba Leminski viveu grande parte de sua vida e onde mantinha uma efervescência cultural?",
