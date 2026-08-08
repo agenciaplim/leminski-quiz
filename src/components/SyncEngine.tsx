@@ -39,11 +39,7 @@ export default function SyncEngine() {
             score: p.score,
             timeMs: p.timeMs,
             playedAt: p.playedAt,
-            ip: p.ip || null,
-            sessionId: p.sessionId || null,
-            privacyPolicyVersion: p.privacyPolicyVersion || null,
-            rulesVersion: p.rulesVersion || null,
-            origin: p.origin || 'totem'
+            ip: p.ip || null
           };
 
           // Verifica se o lead já existe na nuvem pelo CPF
