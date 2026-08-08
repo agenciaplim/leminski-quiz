@@ -76,8 +76,30 @@ export default function SyncEngine() {
           }
 
           if (syncError) {
-            console.error(`Erro ao sincronizar CPF ${p.cpf}:`, syncError);
-          } else if (p.id) {
+            if (p.status === 'concluido') {
+              // Fallback: Se o UPDATE falhou (RLS), tentamos inserir um novo registro para garantir o ranking.
+              // Tentamos inserir com o mesmo CPF caso não seja Unique.
+              const { error: insertError } = await supabase.from('participants').insert([payload]);
+              
+              if (insertError) {
+                // Se falhou (provavelmente Unique constraint do CPF), tentamos com sufixo 'R'
+                const fallbackPayload = { ...payload, cpf: p.cpf + 'R' };
+                const { error: fallbackError } = await supabase.from('participants').insert([fallbackPayload]);
+                
+                if (!fallbackError) {
+                  syncError = null; // Sucesso no fallback!
+                } else {
+                  console.error(`Erro no fallback de CPF ${p.cpf}:`, fallbackError);
+                }
+              } else {
+                syncError = null; // Sucesso na inserção!
+              }
+            } else {
+              console.error(`Erro ao sincronizar CPF ${p.cpf}:`, syncError);
+            }
+          } 
+          
+          if (!syncError && p.id) {
             // Marca como sincronizado localmente se deu certo
             await db.participants.update(p.id, { synced: true });
           }

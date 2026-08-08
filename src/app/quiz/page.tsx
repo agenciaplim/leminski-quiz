@@ -90,13 +90,7 @@ export default function Quiz() {
     setQuizFinished(true);
     const timeMs = Date.now() - startTime.current; // Total time spent in ms
     
-    // Calculate final score
-    const maxTimeS = questions.length * 20; // 9 * 20 = 180s
-    let totalTimeS = timeMs / 1000;
-    if (totalTimeS > maxTimeS) totalTimeS = maxTimeS;
-    
-    const timeFactor = (maxTimeS - totalTimeS) / maxTimeS;
-    const finalScore = Math.round(finalKnowledgeScore * (1 + Math.max(0, timeFactor)));
+    const finalScore = finalKnowledgeScore; // Tempo serve apenas como desempate no ranking
     
     if (cpf) {
       const participant = await db.participants.where("cpf").equals(cpf).first();

@@ -131,7 +131,7 @@ export default function Ranking() {
             } else if (index === 2) {
               rowClass = "bg-orange-400 border-4 border-leminski-blue p-6 rounded-[1.5rem] flex items-center justify-between shadow-[4px_4px_0px_#192B4D] mt-2";
               posClass = "text-4xl font-black text-leminski-blue w-16 text-center";
-            } else if (player.cpf === highlightCpf) {
+            } else if (player.cpf.replace(/R$/, '') === highlightCpf?.replace(/R$/, '')) {
               rowClass = "bg-white border-4 border-leminski-red p-6 flex items-center justify-between shadow-[4px_4px_0px_#E32626] mt-2 animate-pulse";
               posClass = "text-4xl font-black text-leminski-red w-16 text-center";
             }
@@ -150,13 +150,13 @@ export default function Ranking() {
                 <div className="flex items-center space-x-12">
                   <div className="flex flex-col items-end">
                     <span className="text-sm text-leminski-blue/70 uppercase tracking-widest font-bold">Pontos</span>
-                    <span className={`font-black ${index === 0 ? 'text-5xl text-leminski-blue' : player.cpf === highlightCpf ? 'text-4xl text-leminski-red' : 'text-4xl text-leminski-blue'}`}>
+                    <span className={`font-black ${index === 0 ? 'text-5xl text-leminski-blue' : player.cpf.replace(/R$/, '') === highlightCpf?.replace(/R$/, '') ? 'text-4xl text-leminski-red' : 'text-4xl text-leminski-blue'}`}>
                       {player.score}
                     </span>
                   </div>
                   <div className="flex flex-col items-end w-24">
                     <span className="text-sm text-leminski-blue/70 uppercase tracking-widest font-bold">Tempo</span>
-                    <span className={`text-2xl font-bold ${player.cpf === highlightCpf ? 'text-leminski-red' : 'text-leminski-blue'}`}>
+                    <span className={`text-2xl font-bold ${player.cpf.replace(/R$/, '') === highlightCpf?.replace(/R$/, '') ? 'text-leminski-red' : 'text-leminski-blue'}`}>
                       {formatTime(player.timeMs)}
                     </span>
                   </div>
